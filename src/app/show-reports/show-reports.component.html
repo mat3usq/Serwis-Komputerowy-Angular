@@ -1,0 +1,16 @@
+<h2>Raporty</h2>
+
+<ul *ngIf="reports.length > 0; else noReports">
+  <li *ngFor="let report of reports">
+    <strong>ID:</strong> {{ report.ReportId }}, 
+    <strong>Opis:</strong> {{ report.Description }}, 
+    <strong>Priorytet:</strong> {{ report.Priority }}, 
+    <strong>Status:</strong> {{ report.Status }}, 
+    <strong>Data rozpoczęcia:</strong> {{ report.StartDate | date:'medium' }}, 
+    <strong>Data zakończenia:</strong> {{ report.EndDate | date:'medium' || 'Brak' }}
+  </li>
+</ul>
+
+<ng-template #noReports>
+  <p>Brak raportów do wyświetlenia.</p>
+</ng-template>

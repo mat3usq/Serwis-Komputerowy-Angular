@@ -1,0 +1,23 @@
+<!-- create-report.component.html -->
+<div>
+    <h1>WITAJ PRZYWOŁYWACZU Z CZYM MASZ PROBLEM </h1>
+  
+    <form (ngSubmit)="onSubmit()">
+        <div>
+          <label for="problemDescription">Opis problemu:</label>
+          <textarea id="problemDescription" name="problemDescription" [(ngModel)]="problemDescription" required></textarea>
+        </div>
+    
+        <div>
+          <label for="priority">Priorytet:</label>
+          <select id="priority" name="priority" [(ngModel)]="selectedPriority" required>
+            <option *ngFor="let priority of priorityOptions" [value]="priority">{{ priority }}</option>
+          </select>
+        </div>
+    
+        <div>
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+  </div>
+  
