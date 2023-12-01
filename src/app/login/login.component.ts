@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
         .subscribe({
           next: (result) => {
             const loggedClient = result;
-            console.log(loggedClient);
+            console.log(`Test: ${loggedClient}`);
             if (loggedClient) {
               this.router.navigate(['dashboard']);
             } else {

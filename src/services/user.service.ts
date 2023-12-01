@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../models/Client';
+import { User } from '../models/User';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, map, filter } from 'rxjs/operators';
@@ -39,10 +40,27 @@ export class UserService {
 
     getClient(email: string, password: string): Observable<Client | undefined> {
         return this.http.get<Client[]>(this.usersUrl).pipe(
-            catchError((error: HttpErrorResponse) => {
-                return throwError(() => new Error(error.message));
-            }),
-            map(clients => clients.find(client => client.Email === email && client.Password === password))
+            map((clients) => {
+                console.log(clients[0].getUserEmail());
+                const foundClient = clients.find(client => {
+                    client.Email === email && client.Password === password
+                });
+                return foundClient || undefined;
+            })
         );
     }
+
 }
+
+//const user = new User("John", 'Doe', 'john.doe@email.com', 'password123', '111111111')
+//console.log(`${user.Password} ${user.password}`)
+
+
+// getClient(email: string, password: string): Observable<Client | undefined> {
+//     return this.http.get<Client[]>(this.usersUrl).pipe(
+//         catchError((error: HttpErrorResponse) => {
+//             return throwError(() => new Error(error.message));
+//         }),
+//         map(clients => clients.find(client => client.Email === email && client.Password === password))
+//     );
+// }

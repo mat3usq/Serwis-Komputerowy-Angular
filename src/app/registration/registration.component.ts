@@ -43,7 +43,9 @@ export class RegistrationComponent implements OnInit {
           next: (result) => {
             if (!result) {
               const newClient = new Client(formData.firstName, formData.lastName, formData.email, formData.password, formData.phoneNumber);
-              this.userService.addClient(newClient);
+              this.userService.addClient(newClient).subscribe(response => {
+                next: console.log(response)
+              });;
               this.router.navigate(['']);
             }
           },
