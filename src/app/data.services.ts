@@ -10,15 +10,15 @@ export class DataService implements InMemoryDbService {
         return {
             clients: [
                 {
-                    userId: 0,
+                    id: 0,
                     firstName: 'John',
                     lastName: 'Doe',
-                    email: 'john.doe@email.com',
+                    email: 'a',
                     password: 'password123',
                     phoneNumber: '111111111',
                 },
                 {
-                    userId: 1,
+                    id: 1,
                     firstName: 'Alice',
                     lastName: 'Smith',
                     email: 'alice.smith@email.com',
@@ -26,7 +26,7 @@ export class DataService implements InMemoryDbService {
                     phoneNumber: '222222222',
                 },
                 {
-                    userId: 2,
+                    id: 2,
                     firstName: 'Bob',
                     lastName: 'Johnson',
                     email: 'bob.johnson@email.com',
@@ -36,33 +36,33 @@ export class DataService implements InMemoryDbService {
             ],
             servicemen: [
                 {
-                    "userId": 0,
-                    "firstName": "Jane",
-                    "lastName": "Doe",
-                    "email": "jane.doe@email.com",
-                    "password": "pass123",
-                    "phoneNumber": "444-555-6666"
+                    id: 0,
+                    firstName: "Jane",
+                    lastName: "Doe",
+                    email: "jane.doe@email.com",
+                    password: "pass123",
+                    phoneNumber: "444-555-6666"
                 },
                 {
-                    "userId": 1,
-                    "firstName": "Eve",
-                    "lastName": "Taylor",
-                    "email": "eve.taylor@email.com",
-                    "password": "topsecret",
-                    "phoneNumber": "777-888-9999"
+                    id: 1,
+                    firstName: "Eve",
+                    lastName: "Taylor",
+                    email: "eve.taylor@email.com",
+                    password: "topsecret",
+                    phoneNumber: "777-888-9999"
                 },
                 {
-                    "userId": 2,
-                    "firstName": "Charlie",
-                    "lastName": "Brown",
-                    "email": "charlie.brown@email.com",
-                    "password": "peanuts123",
-                    "phoneNumber": "123-456-7890"
+                    id: 2,
+                    firstName: "Charlie",
+                    lastName: "Brown",
+                    email: "charlie.brown@email.com",
+                    password: "peanuts123",
+                    phoneNumber: "123-456-7890"
                 }
             ],
             reports: [
                 {
-                    reportId: 0,
+                    id: 0,
                     description: 'Opis raportu 0',
                     priority: 'high',
                     status: 'solved',
@@ -71,7 +71,7 @@ export class DataService implements InMemoryDbService {
 
                 },
                 {
-                    reportId: 1,
+                    id: 1,
                     description: 'Opis raportu 1',
                     priority: 'normal',
                     status: 'inRealization',
@@ -80,7 +80,7 @@ export class DataService implements InMemoryDbService {
 
                 },
                 {
-                    reportId: 2,
+                    id: 2,
                     description: 'Opis raportu 2',
                     priority: 'normal',
                     status: 'inRealization',
@@ -89,7 +89,7 @@ export class DataService implements InMemoryDbService {
 
                 },
                 {
-                    reportId: 3,
+                    id: 3,
                     description: 'Opis raportu 3',
                     priority: 'high',
                     status: 'solved',
@@ -98,7 +98,7 @@ export class DataService implements InMemoryDbService {
 
                 },
                 {
-                    reportId: 4,
+                    id: 4,
                     description: 'Opis raportu 4',
                     priority: 'normal',
                     status: 'solved',
@@ -107,7 +107,7 @@ export class DataService implements InMemoryDbService {
 
                 },
                 {
-                    reportId: 5,
+                    id: 5,
                     description: 'Opis raportu 5',
                     priority: 'high',
                     status: 'new',

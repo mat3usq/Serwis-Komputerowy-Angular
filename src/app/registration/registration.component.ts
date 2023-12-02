@@ -37,26 +37,34 @@ export class RegistrationComponent implements OnInit {
   submitForm() {
     if (this.registrationForm.valid) {
       const formData = this.registrationForm.value;
-
-      this.userService.getClientByEmail(formData.email)
+      this.userService.isEmailExists(formData.email)
         .subscribe({
           next: (result) => {
             if (!result) {
-              const newClient = new Client(formData.firstName, formData.lastName, formData.email, formData.password, formData.phoneNumber);
-              this.userService.addClient(newClient).subscribe(response => {
-                next: console.log(response)
-              });;
-              this.router.navigate(['']);
+              const newClient = new Client(0, formData.firstName, formData.lastName, formData.email, formData.password, formData.phoneNumber);
+              this.userService.addClient(newClient).subscribe({
+                next: (response) => {
+                  console.log(response);
+                  this.router.navigate(['']);
+                },
+                error: (err) => {
+                  console.log(err);
+                }
+              });
+            } else {
+              console.log("Email already exists!");
             }
           },
-          error: (err) => { console.log(err) },
-        })
-    }
-    else {
+          error: (err) => {
+            console.log(err);
+          }
+        });
+    } else {
       console.log("Form is not valid!!!");
       this.getFormValidationErrors();
     }
   }
+
 
   getFormValidationErrors() {
     Object.keys(this.registrationForm.controls).forEach((key) => {

@@ -1,15 +1,14 @@
 export class User {
-    private static id: number = 3;
-    protected userId: number = 0;
-    protected firstName: string = "";
-    protected lastName: string = "";
-    protected email: string = "";
-    protected password: string = "";
-    protected phoneNumber: string = "";
+    public id: number = 0;
+    public firstName: string = "";
+    public lastName: string = "";
+    public email: string = "";
+    public password: string = "";
+    public phoneNumber: string = "";
 
 
     public get UserId(): number {
-        return this.userId;
+        return this.id;
     }
     public get Email(): string {
         return this.email;
@@ -27,20 +26,8 @@ export class User {
         return this.phoneNumber;
     }
 
-    public getUserEmail(): string {
-        return this.email;
-    }
-    public getUserPassword(): string {
-        return this.password;
-    }
-
-    constructor(firstName: string, lastName: string, email: string, password: string, phoneNumber: string, id?: number) {
-        if (id) {
-            this.userId = id;
-        } else {
-            this.userId = User.id;
-            ++User.id;
-        }
+    constructor(id: number, firstName: string, lastName: string, email: string, password: string, phoneNumber: string) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

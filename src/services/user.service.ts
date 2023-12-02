@@ -4,12 +4,14 @@ import { User } from '../models/User';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, map, filter } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
     private usersUrl = 'api/clients/';
+    private static generalId = 3;
     constructor(private http: HttpClient) { }
 
     getClients(): Observable<Client[]> {
@@ -22,45 +24,46 @@ export class UserService {
     }
 
     addClient(client: Client): Observable<Client> {
-        return this.http.post<Client>(this.usersUrl, client).pipe(
+        console.log(client);
+        const data = {
+            id: null,
+            firstName: client.firstName,
+            lastName: client.lastName,
+            email: client.email,
+            password: client.password,
+            phoneNumber: client.phoneNumber
+        }
+        return this.http.post<Client>(this.usersUrl, data)
+            .pipe(
+                catchError((error: HttpErrorResponse) => {
+                    return throwError(() => new Error(error.message));
+                })
+            );
+    }
+
+    isEmailExists(email: string): Observable<boolean> {
+        return this.http.get<Client[]>(this.usersUrl).pipe(
+            map((clients) => clients.map(({ email }) => new String(email))),
+            map((actualEmailsInstances) => {
+                return actualEmailsInstances.some(registerdEmail => registerdEmail == email);
+            }),
             catchError((error: HttpErrorResponse) => {
                 return throwError(() => new Error(error.message));
             })
-        )
-    }
 
-    getClientByEmail(email: string): Observable<boolean> {
-        return this.http.get<Client[]>(this.usersUrl).pipe(
-            catchError((error: HttpErrorResponse) => {
-                return throwError(() => new Error(error.message));
-            }),
-            map(clients => clients.some(client => client.Email === email))
         );
     }
 
     getClient(email: string, password: string): Observable<Client | undefined> {
         return this.http.get<Client[]>(this.usersUrl).pipe(
-            map((clients) => {
-                console.log(clients[0].getUserEmail());
-                const foundClient = clients.find(client => {
-                    client.Email === email && client.Password === password
-                });
-                return foundClient || undefined;
+            map((clients) => clients.map(({ id, firstName, lastName, email, password, phoneNumber }) => new Client(id, firstName, lastName, email, password, phoneNumber))),
+            map((actualClientInstances) => {
+                console.log(actualClientInstances);
+                return actualClientInstances.find(client => client.Email === email && client.Password === password);
+            }),
+            catchError((error: HttpErrorResponse) => {
+                return throwError(() => new Error(error.message));
             })
         );
     }
-
 }
-
-//const user = new User("John", 'Doe', 'john.doe@email.com', 'password123', '111111111')
-//console.log(`${user.Password} ${user.password}`)
-
-
-// getClient(email: string, password: string): Observable<Client | undefined> {
-//     return this.http.get<Client[]>(this.usersUrl).pipe(
-//         catchError((error: HttpErrorResponse) => {
-//             return throwError(() => new Error(error.message));
-//         }),
-//         map(clients => clients.find(client => client.Email === email && client.Password === password))
-//     );
-// }
