@@ -2,12 +2,12 @@
 
 <ul *ngIf="reports.length > 0; else noReports">
   <li *ngFor="let report of reports">
-    <strong>ID:</strong> {{ report.ReportId }}, 
-    <strong>Opis:</strong> {{ report.Description }}, 
-    <strong>Priorytet:</strong> {{ report.Priority }}, 
-    <strong>Status:</strong> {{ report.Status }}, 
-    <strong>Data rozpoczęcia:</strong> {{ report.StartDate | date:'medium' }}, 
-    <strong>Data zakończenia:</strong> {{ report.EndDate | date:'medium' || 'Brak' }}
+    <strong>ID:</strong> {{ report['reportId'] }}, 
+    <strong>Opis:</strong> {{ report['description'] }}, 
+    <strong>Priorytet:</strong> {{ report['priority'] }}, 
+    <strong>Status:</strong> {{ report['status'] }}, 
+    <strong>Data rozpoczęcia:</strong> {{ report['startDate'] }}, 
+    <strong>Data zakończenia:</strong> {{ report['endDate']  }}
   </li>
 </ul>
 

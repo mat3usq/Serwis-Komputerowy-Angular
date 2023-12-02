@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { TestComponent } from './test/test.component';
-//import { ShowReportsComponent } from './show-reports/show-reports.component';
-//import { ShowReportFormComponent } from './show-report-form/show-report-form.component';
+import { ShowReportsComponent } from './show-reports/show-reports.component';
+import { ShowReportFormComponent } from './show-report-form/show-report-form.component';
 
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { DataService } from './data.services';
 import { HttpClientModule } from '@angular/common/http';
+import { ReportsService } from 'src/services/reports.service';
+import { UserService } from 'src/services/user.service';
 
 @NgModule({
   declarations: [
@@ -22,8 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     RegistrationComponent,
     TestComponent,
-    //ShowReportsComponent,
-    //ShowReportFormComponent
+    ShowReportsComponent,
+    ShowReportFormComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientInMemoryWebApiModule.forRoot(DataService),
     HttpClientModule
   ],
-  providers: [],
+  providers: [ReportsService,UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

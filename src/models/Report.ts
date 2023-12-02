@@ -12,6 +12,7 @@ export class Report {
     private startDate: Date;
     private endDate?: Date;
     private userId: number;
+    private servicemanid?: number;
 
     constructor(description: string, priority: Priority, status: Status, startDate: Date, userId: number) {
         this.reportId = Report.idCounter++;
@@ -22,59 +23,59 @@ export class Report {
         this.userId = userId;
     }
 
-    get ReportId(): number {
-        return this.reportId;
-    }
-    get UserId(): number {
-        return this.reportId;
-    }
+    // get ReportId(): number {
+    //     return this.reportId;
+    // }
+    // get UserId(): number {
+    //     return this.reportId;
+    // }
 
 
-    get Description(): string {
-        return this.description;
-    }
+    // get Description(): string {
+    //     return this.description;
+    // }
 
-    set Description(value: string) {
-        this.description = value;
-    }
+    // set Description(value: string) {
+    //     this.description = value;
+    // }
 
-    get Priority(): Priority {
-        return this.priority;
-    }
+    // get Priority(): Priority {
+    //     return this.priority;
+    // }
 
-    set Priority(value: Priority) {
-        this.priority = value;
-    }
+    // set Priority(value: Priority) {
+    //     this.priority = value;
+    // }
 
-    get Status(): Status {
-        return this.status;
-    }
+    // get Status(): Status {
+    //     return this.status;
+    // }
 
-    set Status(value: Status) {
-        this.status = value;
-    }
+    // set Status(value: Status) {
+    //     this.status = value;
+    // }
 
-    get Price(): number | undefined {
-        return this.price;
-    }
+    // get Price(): number | undefined {
+    //     return this.price;
+    // }
 
-    set Price(value: number | undefined) {
-        this.price = value;
-    }
+    // set Price(value: number | undefined) {
+    //     this.price = value;
+    // }
 
-    get StartDate(): Date {
-        return this.startDate;
-    }
+    // get StartDate(): Date {
+    //     return this.startDate;
+    // }
 
-    set StartDate(value: Date) {
-        this.startDate = value;
-    }
+    // set StartDate(value: Date) {
+    //     this.startDate = value;
+    // }
 
-    get EndDate(): Date | undefined {
-        return this.endDate;
-    }
+    // get EndDate(): Date | undefined {
+    //     return this.endDate;
+    // }
 
-    set EndDate(value: Date | undefined) {
-        this.endDate = value;
-    }
+    // set EndDate(value: Date | undefined) {
+    //     this.endDate = value;
+    // }
 }

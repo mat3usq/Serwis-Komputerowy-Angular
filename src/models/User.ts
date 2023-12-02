@@ -26,6 +26,11 @@ export class User {
         return this.phoneNumber;
     }
 
+    public get Id(): number {
+        return this.id;
+    }
+
+
     constructor(id: number, firstName: string, lastName: string, email: string, password: string, phoneNumber: string) {
         this.id = id;
         this.firstName = firstName;
@@ -34,4 +39,7 @@ export class User {
         this.password = password;
         this.phoneNumber = phoneNumber;
     }
+
+
+
 }

@@ -1,7 +1,10 @@
 import { User } from './User'
 
 export class Serviceman extends User {
-    constructor(firstName: string, lastName: string, email: string, password: string, phoneNumber: string) {
-        super(firstName, lastName, email, password, phoneNumber);
+    constructor(id: number,firstName: string, lastName: string, email: string, password: string, phoneNumber: string) {
+        super(id,firstName, lastName, email, password, phoneNumber);
+    }
+    isServiceman(): Boolean{
+        return true;
     }
 }
