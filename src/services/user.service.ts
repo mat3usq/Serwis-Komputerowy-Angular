@@ -8,9 +8,13 @@ import { catchError, retry, map, filter } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class UserService {
-    private usersUrl = 'api/clients/';
-    constructor(private http: HttpClient) { }
+export class UserService extends User {
+
+  private usersUrl = 'api/clients/';
+
+  constructor(private http: HttpClient) {
+    super('', '', '', '', ''); // Initialize with empty values or provide default values
+  }
 
     getClients(): Observable<Client[]> {
         return this.http.get<Client[]>(this.usersUrl).pipe(
@@ -38,17 +42,17 @@ export class UserService {
         );
     }
 
-    getClient(email: string, password: string): Observable<Client | undefined> {
-        return this.http.get<Client[]>(this.usersUrl).pipe(
-            map((clients) => {
-                console.log(clients[0].getUserEmail());
-                const foundClient = clients.find(client => {
-                    client.Email === email && client.Password === password
-                });
-                return foundClient || undefined;
-            })
-        );
-    }
+  getClient(email: string, password: string): Observable<Client | undefined> {
+    return this.http.get<Client[]>(this.usersUrl).pipe(
+      map((clients: any) => {
+          const foundClient = clients.find((client: Client) => {
+          return client['email'] === email && client['password'] === password;
+        });
+
+        return foundClient || undefined;
+      })
+    );
+  }
 
 }
 

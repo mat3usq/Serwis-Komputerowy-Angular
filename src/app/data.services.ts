@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Client } from '../models/Client';
+import { User } from '../models/User';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 @Injectable({
@@ -7,33 +9,13 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 export class DataService implements InMemoryDbService {
     constructor() { }
     createDb() {
+        const clients: Client[] = [
+            new Client('John', 'Doe', 'john.doe@email.com', 'password123', '111111111', 0),
+            new Client('Alice', 'Smith', 'alice.smith@email.com', 'securepass', '222222222', 1),
+            new Client('Bob', 'Johnson', 'bob.johnson@email.com', 'secret123', '333333333', 2),
+        ];
         return {
-            clients: [
-                {
-                    userId: 0,
-                    firstName: 'John',
-                    lastName: 'Doe',
-                    email: 'john.doe@email.com',
-                    password: 'password123',
-                    phoneNumber: '111111111',
-                },
-                {
-                    userId: 1,
-                    firstName: 'Alice',
-                    lastName: 'Smith',
-                    email: 'alice.smith@email.com',
-                    password: 'securepass',
-                    phoneNumber: '222222222',
-                },
-                {
-                    userId: 2,
-                    firstName: 'Bob',
-                    lastName: 'Johnson',
-                    email: 'bob.johnson@email.com',
-                    password: 'secret123',
-                    phoneNumber: '333333333',
-                }
-            ],
+            clients,
             servicemen: [
                 {
                     "userId": 0,
