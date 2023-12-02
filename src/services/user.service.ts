@@ -27,11 +27,11 @@ export class UserService {
         console.log(client);
         const data = {
             id: null,
-            firstName: client.firstName,
-            lastName: client.lastName,
-            email: client.email,
-            password: client.password,
-            phoneNumber: client.phoneNumber
+            firstName: client['firstName'],
+            lastName: client['lastName'],
+            email: client['email'],
+            password: client['password'],
+            phoneNumber: client['phoneNumber']
         }
         return this.http.post<Client>(this.usersUrl, data)
             .pipe(
@@ -41,22 +41,29 @@ export class UserService {
             );
     }
 
+
+
+
     isEmailExists(email: string): Observable<boolean> {
         return this.http.get<Client[]>(this.usersUrl).pipe(
-            map((clients) => clients.map(({ email }) => new String(email))),
+            map((clients) => clients.map((client) => client['email'])), // Użyj gettera dla pola email
             map((actualEmailsInstances) => {
-                return actualEmailsInstances.some(registerdEmail => registerdEmail == email);
+                console.log(actualEmailsInstances);
+                return actualEmailsInstances.some((registeredEmail) => registeredEmail === email);
             }),
             catchError((error: HttpErrorResponse) => {
                 return throwError(() => new Error(error.message));
             })
-
         );
     }
+
+    
+
 
     getClient(email: string, password: string): Observable<Client | undefined> {
         return this.http.get<Client[]>(this.usersUrl).pipe(
           map((clients: any) => {
+            console.log(clients)
               const foundClient = clients.find((client: Client) => {
               return client['email'] === email && client['password'] === password;
             });

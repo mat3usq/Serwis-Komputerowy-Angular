@@ -40,6 +40,7 @@ export class RegistrationComponent implements OnInit {
       this.userService.isEmailExists(formData.email)
         .subscribe({
           next: (result) => {
+            console.log(result)
             if (!result) {
               const newClient = new Client(0, formData.firstName, formData.lastName, formData.email, formData.password, formData.phoneNumber);
               this.userService.addClient(newClient).subscribe({

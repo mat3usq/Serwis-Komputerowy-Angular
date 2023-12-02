@@ -1,10 +1,10 @@
 export class User {
-    public id: number = 0;
-    public firstName: string = "";
-    public lastName: string = "";
-    public email: string = "";
-    public password: string = "";
-    public phoneNumber: string = "";
+    protected id: number = 0;
+    protected firstName: string = "";
+    protected lastName: string = "";
+    protected email: string = "";
+    protected password: string = "";
+    protected phoneNumber: string = "";
 
 
     public get UserId(): number {
