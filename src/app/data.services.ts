@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Client } from '../models/Client';
+import { User } from '../models/User';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 @Injectable({
@@ -7,59 +9,13 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 export class DataService implements InMemoryDbService {
     constructor() { }
     createDb() {
+        const clients: Client[] = [
+            new Client(0,'John', 'Doe', 'a', 'a', '111111111'),
+            new Client(1,'Alice', 'Smith', 'alice.smith@email.com', 'securepass', '222222222'),
+            new Client(2, 'Bob', 'Johnson', 'bob.johnson@email.com', 'secret123', '333333333'),
+        ];
         return {
-            clients: [
-                {
-                    id: 0,
-                    firstName: 'John',
-                    lastName: 'Doe',
-                    email: 'a',
-                    password: 'password123',
-                    phoneNumber: '111111111',
-                },
-                {
-                    id: 1,
-                    firstName: 'Alice',
-                    lastName: 'Smith',
-                    email: 'alice.smith@email.com',
-                    password: 'securepass',
-                    phoneNumber: '222222222',
-                },
-                {
-                    id: 2,
-                    firstName: 'Bob',
-                    lastName: 'Johnson',
-                    email: 'bob.johnson@email.com',
-                    password: 'secret123',
-                    phoneNumber: '333333333',
-                }
-            ],
-            servicemen: [
-                {
-                    id: 0,
-                    firstName: "Jane",
-                    lastName: "Doe",
-                    email: "jane.doe@email.com",
-                    password: "pass123",
-                    phoneNumber: "444-555-6666"
-                },
-                {
-                    id: 1,
-                    firstName: "Eve",
-                    lastName: "Taylor",
-                    email: "eve.taylor@email.com",
-                    password: "topsecret",
-                    phoneNumber: "777-888-9999"
-                },
-                {
-                    id: 2,
-                    firstName: "Charlie",
-                    lastName: "Brown",
-                    email: "charlie.brown@email.com",
-                    password: "peanuts123",
-                    phoneNumber: "123-456-7890"
-                }
-            ],
+            clients,
             reports: [
                 {
                     id: 0,

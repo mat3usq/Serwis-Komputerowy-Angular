@@ -56,14 +56,13 @@ export class UserService {
 
     getClient(email: string, password: string): Observable<Client | undefined> {
         return this.http.get<Client[]>(this.usersUrl).pipe(
-            map((clients) => clients.map(({ id, firstName, lastName, email, password, phoneNumber }) => new Client(id, firstName, lastName, email, password, phoneNumber))),
-            map((actualClientInstances) => {
-                console.log(actualClientInstances);
-                return actualClientInstances.find(client => client.Email === email && client.Password === password);
-            }),
-            catchError((error: HttpErrorResponse) => {
-                return throwError(() => new Error(error.message));
-            })
+          map((clients: any) => {
+              const foundClient = clients.find((client: Client) => {
+              return client['email'] === email && client['password'] === password;
+            });
+    
+            return foundClient || undefined;
+          })
         );
-    }
+      }
 }
