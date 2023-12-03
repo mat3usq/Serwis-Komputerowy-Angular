@@ -33,18 +33,20 @@ export class ReportsService {
     localStorage.setItem(this.localStorageKey, JSON.stringify(reports));
   }
 
-  editReport(reportId: number, status: Status, price: number, endDate: Date): void {
+  editReport(reportId: number, status: Status, price: number): void {
     const reports: Report[] = this.getReportsFromLocalStorage();
     const report = reports.find((r) => r['reportId'] === reportId);
     if (report) {
       report['status'] = status;
       report['price'] = price;
-      report['endDate'] = endDate;
+      if(report['status'] == Status.solved) report['endDate'] = new Date();
+      if(report['status'] != Status.solved) report['endDate'] = undefined;
       localStorage.setItem(this.localStorageKey, JSON.stringify(reports));
     }
   }
 
   assignServicemanToReport(reportId: number, servicemanId: number): void {
+    console.log(reportId +" "+servicemanId);
     const reports: Report[] = this.getReportsFromLocalStorage();
     const report = reports.find((r) => r['reportId'] === reportId);
     if (report) {
@@ -57,6 +59,8 @@ export class ReportsService {
     const reports: Report[] = this.getReportsFromLocalStorage();
     return reports.find((report) => report['reportId'] === reportId);
   }
+
+
   
 
   private getReportsFromLocalStorage(): Report[] {

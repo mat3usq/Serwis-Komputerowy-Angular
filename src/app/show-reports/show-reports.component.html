@@ -1,13 +1,29 @@
 <h2>Raporty</h2>
 
+<div>
+    <label for="sortOrder">Sortuj:</label>
+  <select id="sortOrder"[(ngModel)]="sortOrder" (change)="changeSortOrder(sortOrder)">
+    <option value="asc">Rosnąco</option>
+    <option value="desc">Malejąco</option>
+  </select>
+</div>
+
 <ul *ngIf="reports.length > 0; else noReports">
-  <li *ngFor="let report of reports">
+  <li *ngFor="let report of reports | dateSort: sortOrder : 'asc';  let i = index ">
     <strong>ID:</strong> {{ report['reportId'] }}, 
     <strong>Opis:</strong> {{ report['description'] }}, 
     <strong>Priorytet:</strong> {{ report['priority'] }}, 
+    <strong>Cena:</strong> {{ report['price'] }}, 
     <strong>Status:</strong> {{ report['status'] }}, 
     <strong>Data rozpoczęcia:</strong> {{ report['startDate'] }}, 
     <strong>Data zakończenia:</strong> {{ report['endDate']  }}
+    <span *ngIf="isServiceman && report['servicemanid'] == undefined" >
+        <!-- Button code here -->
+        <button (click)="TakeTask(report)">Take this report</button>
+    </span>
+    <span *ngIf="report['servicemanid'] == this.loggedUserId">
+      <button (click)="NavigateToEditReport(report['reportId'])">Edit report</button>
+    </span>
   </li>
 </ul>
 

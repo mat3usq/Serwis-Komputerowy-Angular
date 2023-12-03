@@ -17,6 +17,8 @@ import { DataService } from './data.services';
 import { HttpClientModule } from '@angular/common/http';
 import { ReportsService } from 'src/services/reports.service';
 import { UserService } from 'src/services/user.service';
+import { DateSortPipe } from 'src/services/DateSortPipe';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { UserService } from 'src/services/user.service';
     RegistrationComponent,
     TestComponent,
     ShowReportsComponent,
-    ShowReportFormComponent
+    ShowReportFormComponent,
+    DateSortPipe
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,8 @@ import { UserService } from 'src/services/user.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientInMemoryWebApiModule.forRoot(DataService),
-    HttpClientModule
+    HttpClientModule,
+    DateSortPipe
   ],
   providers: [ReportsService,UserService],
   bootstrap: [AppComponent]

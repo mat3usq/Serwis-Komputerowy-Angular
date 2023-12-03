@@ -4,6 +4,8 @@ import { Report } from '../../models/Report';
 import { Priority } from '../../models/Priority';
 import { Status } from '../../models/Status';
 import { UserService } from 'src/services/user.service';
+import { Router } from '@angular/router';
+// import { DateSortPipe } from 'src/services/DateSortPipe';
 
 @Component({
   selector: 'app-show-reports',
@@ -11,22 +13,53 @@ import { UserService } from 'src/services/user.service';
   styleUrls: ['./show-reports.component.css'],
 })
 export class ShowReportsComponent implements OnInit {
-  reports: Report[] = [];
+  public reports: Report[] = [];
+  public isServiceman: boolean = false;
+  public loggedUserId : number = -1;
+  sortOrder: 'asc' | 'desc' = 'asc';
 
   statusOptions: Status[] = [Status.new, Status.assigned, Status.inRealization, Status.solved];
 
-  constructor(private reportsService: ReportsService,private userService: UserService,) { }
+  constructor(private reportsService: ReportsService,private userService: UserService,private router : Router) { }
+
+
 
   ngOnInit(): void {
     this.loadReports();
   }
 
+
+
+  changeSortOrder(sortOrder: 'asc' | 'desc') {
+    this.sortOrder = sortOrder;
+
+  }
+
   loadReports() {
-    if(this.userService.isServiceman()) this.reports = this.reportsService.getReports();
+    this.isServiceman = this.userService.isServiceman();
+    this.loggedUserId = this.userService.getLoggedClient();
+    if(this.isServiceman) this.reports = this.reportsService.getReports();
     else this.reports = this.reportsService.getReportsByUserId(this.userService.getLoggedClient());
     console.log(this.reports)
   }
 
+  NavigateToEditReport(reportId : number){
+  
+    const navigationExtras = {
+      state: {
+        ReportId: reportId
+      }
+    };
+    //console.log(reportId);
+    this.router.navigate(['/edit-report', reportId]);
+  }
 
+
+
+  TakeTask(clickedReport: Report) {
+    this.reportsService.assignServicemanToReport(clickedReport['reportId'],this.userService.getLoggedClient());
+    console.log(this.reportsService.getReports())
+    window.location.reload();
+  }
 
 }

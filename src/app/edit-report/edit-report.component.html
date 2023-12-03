@@ -1,0 +1,29 @@
+<div>
+    <h2>Edycja Raportu</h2>
+    <div>
+        <strong>ID:</strong> {{ report ? report['reportId'] : 'N/A' }},
+        <strong>Opis:</strong> {{ report ? report['description'] : 'N/A' }},
+        <strong>Priorytet:</strong> {{ report ? report['priority'] : 'N/A' }},
+        <strong>Cena:</strong> {{ report ? report['price'] : 'N/A' }},
+        <strong>Status:</strong> {{ report ? report['status'] : 'N/A' }},
+        <strong>UserId:</strong> {{ report ? report['userId'] : 'N/A' }},
+        <strong>Data rozpoczęcia:</strong> {{ report ? report['startDate'] : 'N/A' }},
+        <strong>Data zakończenia:</strong> {{ report ? report['endDate'] : 'N/A' }}
+      </div>
+    
+    <h3>Edit:</h3>
+    <div>
+      <label for="editedStatus">Status:</label>
+      <select id="editedStatus" name="editedStatus" [(ngModel)]="editedStatus" required>
+        <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+      </select>
+    </div>
+  
+    <div>
+      <label for="editedPrice">Cena:</label>
+      <input type="text" id="editedPrice" name="editedPrice" [(ngModel)]="editedPrice" />
+    </div>
+  
+    <button (click)="saveChanges(editedStatus,editedPrice)">Zapisz zmiany</button>
+  </div>
+  

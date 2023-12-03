@@ -1,0 +1,10 @@
+{
+    "Logs": [
+      {
+        "reportId": 1,
+        "status": "New",
+        "price": 100.50,
+        "logDate": "2023-12-15"
+      }
+    ]
+  }
