@@ -12,7 +12,9 @@ export class ReportsService {
     const initialReports: Report[] = [
       new Report('Opis raportu 0', Priority.high, Status.solved, new Date('2023-11-26'), 2),
       new Report('Opis raportu 1', Priority.normal, Status.inRealization, new Date('2023-11-27'), 3),
-      new Report('Opis raportu 2', Priority.normal, Status.inRealization, new Date('2023-11-28'), 2),
+      new Report('Opis raportu 2', Priority.normal, Status.inRealization, new Date('2023-11-22'), 2),
+      new Report('Opis raportu 3', Priority.normal, Status.inRealization, new Date('2023-11-21'), 2),
+      new Report('Opis raportu 4', Priority.normal, Status.inRealization, new Date('2023-11-30'), 2),
     ];
     if(this.getReportsFromLocalStorage().length == 0 )  localStorage.setItem(this.localStorageKey, JSON.stringify(initialReports));
   }

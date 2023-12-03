@@ -25,9 +25,6 @@ export class UserService {
     // console.log(this.getClientsFromLocalStorage());
     // console.log(this.getServicemanFromLocalStorage());
 
-
-
-
     const client1 = new Client(0, 'John', 'Doe', 'a', 'a', '111111111')
     const client2 = new Client(0, 'John', 'Doe', 'b', 'b', '111111111')
     const serviceman = new Serviceman(5, 'cos', 'ktos', 'f', 'f', '111111111')

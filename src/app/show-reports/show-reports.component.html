@@ -1,28 +1,53 @@
 <h2>Raporty</h2>
 
 <div>
-    <label for="sortOrder">Sortuj:</label>
-  <select id="sortOrder"[(ngModel)]="sortOrder" (change)="changeSortOrder(sortOrder)">
-    <option value="asc">Rosnąco</option>
-    <option value="desc">Malejąco</option>
+  <label for="sortOrder">Data:</label>
+  <select
+    id="sortOrder"
+    [(ngModel)]="dateOrder"
+    (change)="changeDateOrder(dateOrder)"
+  >
+    <option value="asc">Najwczesniejsze</option>
+    <option value="desc">Najpozniejsze</option>
+  </select>
+</div>
+
+<div>
+  <label for="sortOrder">Priorytet:</label>
+  <select
+    id="sortOrder"
+    [(ngModel)]="priorityOrder"
+    (change)="changePriorityOrder(priorityOrder)"
+  >
+    <option value="asc">Normalny</option>
+    <option value="desc">Wysoki</option>
   </select>
 </div>
 
 <ul *ngIf="reports.length > 0; else noReports">
-  <li *ngFor="let report of reports | dateSort: sortOrder : 'asc';  let i = index ">
-    <strong>ID:</strong> {{ report['reportId'] }}, 
-    <strong>Opis:</strong> {{ report['description'] }}, 
-    <strong>Priorytet:</strong> {{ report['priority'] }}, 
-    <strong>Cena:</strong> {{ report['price'] }}, 
-    <strong>Status:</strong> {{ report['status'] }}, 
-    <strong>Data rozpoczęcia:</strong> {{ report['startDate'] }}, 
-    <strong>Data zakończenia:</strong> {{ report['endDate']  }}
-    <span *ngIf="isServiceman && report['servicemanid'] == undefined" >
-        <!-- Button code here -->
-        <button (click)="TakeTask(report)">Take this report</button>
+  <li
+    *ngFor="
+      let report of reports
+        | combinedSort : dateOrder : 'date'
+        | combinedSort : priorityOrder : 'priority';
+      let i = index
+    "
+  >
+    <strong>ID:</strong> {{ report["reportId"] }}, <strong>Opis:</strong>
+    {{ report["description"] }}, <strong>Priorytet:</strong>
+    {{ report["priority"] }}, <strong>Cena:</strong> {{ report["price"] }},
+    <strong>Status:</strong> {{ report["status"] }},
+    <strong>Data rozpoczęcia:</strong>
+    {{ report["startDate"] | date : "dd.MM.yyyy HH:mm" }},
+    <strong>Data zakończenia:</strong>
+    {{ report["endDate"] | date : "dd.MM.yyyy HH:mm" }}
+    <span *ngIf="isServiceman && report['servicemanid'] == undefined">
+      <button (click)="TakeTask(report)">Take this report</button>
     </span>
     <span *ngIf="report['servicemanid'] == this.loggedUserId">
-      <button (click)="NavigateToEditReport(report['reportId'])">Edit report</button>
+      <button (click)="NavigateToEditReport(report['reportId'])">
+        Edit report
+      </button>
     </span>
   </li>
 </ul>

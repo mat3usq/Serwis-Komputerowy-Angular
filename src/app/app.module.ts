@@ -17,8 +17,7 @@ import { DataService } from './data.services';
 import { HttpClientModule } from '@angular/common/http';
 import { ReportsService } from 'src/services/reports.service';
 import { UserService } from 'src/services/user.service';
-import { DateSortPipe } from 'src/services/DateSortPipe';
-
+import { combinedSort } from 'src/services/datePriorityPipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +27,7 @@ import { DateSortPipe } from 'src/services/DateSortPipe';
     TestComponent,
     ShowReportsComponent,
     ShowReportFormComponent,
-    DateSortPipe
+    combinedSort
   ],
   imports: [
     BrowserModule,
@@ -37,7 +36,6 @@ import { DateSortPipe } from 'src/services/DateSortPipe';
     ReactiveFormsModule,
     HttpClientInMemoryWebApiModule.forRoot(DataService),
     HttpClientModule,
-    DateSortPipe
   ],
   providers: [ReportsService,UserService],
   bootstrap: [AppComponent]
