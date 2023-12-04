@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Log } from 'src/models/Log';
 import { LogService } from 'src/services/logs.service';
+import { DisplayLogsComponent } from '../display-logs/display-logs.component';
 
 @Component({
   selector: 'app-show-logs',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,DisplayLogsComponent],
   templateUrl: './show-logs.component.html',
   styleUrl: './show-logs.component.css',
 })
