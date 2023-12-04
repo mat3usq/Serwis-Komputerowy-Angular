@@ -1,4 +1,3 @@
 <div>
-  <app-display-logs [Logs] = 'logs'></app-display-logs>
-  </div>
-  
+  <app-display-logs [logs]='logs' (chosenLogId)="deleteLog($event)"></app-display-logs>
+</div>
