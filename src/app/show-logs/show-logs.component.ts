@@ -8,7 +8,7 @@ import { LogService } from 'src/services/logs.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './show-logs.component.html',
-  styleUrl: './show-logs.component.css'
+  styleUrl: './show-logs.component.css',
 })
 export class ShowLogsComponent implements OnInit {
   logs: Log[] = [];
@@ -17,17 +17,12 @@ export class ShowLogsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLogData();
-    console.log(this.logs)
-  }
-
-  getLogData() {
-    this.logService.getLogs().subscribe(
-      {
-       next: (data) => this.logs = data,
-       error: (err) => { console.log(err) },
-      }
-   )
   }
   
-
+  async getLogData() {
+    const logsObservable = await this.logService.getLogs();
+    logsObservable.subscribe(logs => {
+      this.logs = logs;
+    });
+  }
 }
