@@ -21,16 +21,11 @@ export class RegistrationComponent implements OnInit {
 
   initForm() {
     this.registrationForm = this.formBuilder.group({
-      //email: ['', [Validators.required, Validators.pattern(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
-      //firstName: ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^[A-Z][a-z]*$/)]],
-      //lastName: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[A-Z][a-z]*$/)]],
-      //password: ['', [Validators.required, Validators.minLength(5)]],
-      //phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{9}$/)]]
-      email: ['', [Validators.required]],
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required]]
+      email: ['', [Validators.required, Validators.pattern(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+      firstName: ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^[A-Z][a-z]*$/)]],
+      lastName: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[A-Z][a-z]*$/)]],
+      password: ['', [Validators.required, Validators.minLength(5)]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{9}$/)]]
     });
   }
 

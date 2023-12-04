@@ -19,5 +19,6 @@ export class DisplayLogsComponent {
 
   deleteLog(logId: number) {
     this.chosenLogId.emit(logId);
+    window.location.reload();
   }
 }

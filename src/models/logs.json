@@ -1,22 +1,60 @@
 {
   "Logs": [
     {
-      "reportId": 1,
-      "status": "New",
-      "price": 100.5,
-      "logDate": "2023-12-15"
-    },
-    {
+      "id": 1,
       "reportId": 2,
       "status": "New",
       "price": 200.5,
       "logDate": "2023-12-15"
     },
     {
+      "id": 2,
       "reportId": 3,
       "status": "New",
       "price": 300.5,
       "logDate": "2023-12-15"
+    },
+    {
+      "id": 3,
+      "reportId": 3,
+      "status": "Assigned",
+      "price": "123",
+      "logDate": "2023-12-04T18:04:14.839Z"
+    },
+    {
+      "id": 4,
+      "reportId": 3,
+      "status": "In Realization",
+      "price": "123",
+      "logDate": "2023-12-04T18:05:35.624Z"
+    },
+    {
+      "id": 5,
+      "reportId": 0,
+      "status": "Assigned",
+      "price": "3213123123",
+      "logDate": "2023-12-04T18:16:55.601Z"
+    },
+    {
+      "id": 6,
+      "reportId": 0,
+      "status": "Solved",
+      "price": "99999999",
+      "logDate": "2023-12-04T18:18:33.163Z"
+    },
+    {
+      "id": 7,
+      "reportId": 0,
+      "status": "Assigned",
+      "price": "11111111111",
+      "logDate": "2023-12-04T18:19:05.331Z"
+    },
+    {
+      "id": 8,
+      "reportId": 0,
+      "status": "Solved",
+      "price": "123456789",
+      "logDate": "2023-12-04T18:20:35.647Z"
     }
   ]
 }

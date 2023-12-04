@@ -13,7 +13,6 @@ import { ShowReportFormComponent } from './show-report-form/show-report-form.com
 
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { DataService } from './data.services';
 import { HttpClientModule } from '@angular/common/http';
 import { ReportsService } from 'src/services/reports.service';
 import { UserService } from 'src/services/user.service';
@@ -34,7 +33,6 @@ import { combinedSort } from 'src/services/datePriorityPipe';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientInMemoryWebApiModule.forRoot(DataService),
     HttpClientModule,
   ],
   providers: [ReportsService,UserService],

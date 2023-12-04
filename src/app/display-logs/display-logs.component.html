@@ -5,6 +5,6 @@
     <strong>Status:</strong> {{ log['status'] }},
     <strong>Cena:</strong> {{ log['price'] }},
     <strong>Data logowania:</strong> {{ log['logDate'] | date: 'yyyy-MM-dd HH:mm:ss' }}
-    <button (click)="deleteLog(log['reportId'])">Usuń</button>
+    <button (click)="deleteLog(log['id'])">Usuń</button>
   </li>
 </ul>

@@ -59,7 +59,6 @@ export class ShowReportsComponent implements OnInit {
         ReportId: reportId,
       },
     };
-    //console.log(reportId);
     this.router.navigate(['/edit-report', reportId]);
   }
 

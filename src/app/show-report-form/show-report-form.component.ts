@@ -22,7 +22,6 @@ export class ShowReportFormComponent {
     Priority.normal,
   ];
   onSubmit() {
-    // Tutaj możesz dodać logikę obsługującą przycisk submit
     console.log('Opis problemu:', this.problemDescription);
     console.log('Priorytet:', this.selectedPriority);
     const newReport = new Report(this.problemDescription, this.selectedPriority, Status.new, new Date(), this.userService.getLoggedClient());

@@ -11,11 +11,7 @@ import { map } from 'rxjs/operators';
 export class LogService {
   private apiUrl = 'http://localhost:3000/Logs';
 
-  constructor(private http: HttpClient) { }
-
-  // getLogs(): Observable<Log[]> {
-  //   return this.http.get<Log[]>(this.apiUrl);
-  // }
+  constructor(private http: HttpClient) {}
 
   async getLogs(): Promise<Observable<Log[]>> {
     const response = await fetch(this.apiUrl, {
@@ -35,14 +31,21 @@ export class LogService {
     return observableLogs;
   }
 
-  addLog(log: Log): Observable<Log> {
-    return this.http.post<Log>(this.apiUrl, log);
+  async addLog(log: Log) {
+    console.log(log);
+    const response = await fetch(this.apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(log),
+    });
   }
 
   deleteLog(logId: number): void {
     console.log(logId);
     fetch(this.apiUrl + `/${logId}`, {
       method: 'DELETE',
-    })
+    });
   }
 }

@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm() {
-    //const results = this.userService.getClients().subscribe((result) => { console.log(result) });
     if (this.loginForm.valid) {
       const formData = this.loginForm.value;
 
@@ -34,12 +33,10 @@ export class LoginComponent implements OnInit {
         .subscribe({
           next: (result) => {
             const loggedClient = result;
-            //console.log(`Test: ${JSON.stringify(loggedClient)}`);
             if (loggedClient) {
               this.userService.addLoggedClient(result['id']);
               this.router.navigate(['reports']);
             } else {
-              //console.log("There is no such a user!");
             }
           },
           error: (err) => {
