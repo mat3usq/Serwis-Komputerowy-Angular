@@ -4,7 +4,6 @@ import { Report } from '../../models/Report';
 import { Status } from '../../models/Status';
 import { UserService } from 'src/services/user.service';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-show-reports',
   templateUrl: './show-reports.component.html',

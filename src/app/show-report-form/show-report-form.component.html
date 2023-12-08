@@ -1,22 +1,46 @@
+<!-- <p LogoDirectiveDirective>Serwis Komputerowy</p> -->
 <div>
-    <h1>WITAJ PRZYWOŁYWACZU Z CZYM MASZ PROBLEM </h1>
+  <h1>WITAJ PRZYWOŁYWACZU Z CZYM MASZ PROBLEM </h1>
+
+  <form [formGroup]="newReport" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="problemDescription">Opis problemu:</label>
+        <textarea id="problemDescription" name="problemDescription" formControlName="problemDescription" required></textarea>
+      </div>
+      <div
+      *ngIf="
+        newReport.get('problemDescription')?.hasError('minlength') &&
+        newReport.get('problemDescription')?.touched
+        "
+      >
+      Problem Description needs to be at least 50 characters
+      </div>
+      <div
+      *ngIf="
+        newReport.get('problemDescription')?.hasError('required') &&
+        newReport.get('problemDescription')?.touched
+        "
+      >
+      Problem Description needs to be at least 50 characters
+      </div>
   
-    <form (ngSubmit)="onSubmit()">
-        <div>
-          <label for="problemDescription">Opis problemu:</label>
-          <textarea id="problemDescription" name="problemDescription" [(ngModel)]="problemDescription" required></textarea>
-        </div>
-    
-        <div>
-          <label for="priority">Priorytet:</label>
-          <select id="priority" name="priority" [(ngModel)]="selectedPriority" required>
-            <option *ngFor="let priority of priorityOptions" [value]="priority">{{ priority }}</option>
-          </select>
-        </div>
-    
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-  </div>
-  
+      <div>
+        <label for="priority">Priorytet:</label>
+        <select id="priority" name="priority" formControlName="priority" required>
+          <option *ngFor="let priority of priorityOptions" [value]="priority">{{ priority }}</option>
+        </select>
+      </div>
+      <div
+      *ngIf="
+        newReport.get('priority')?.hasError('required') &&
+        newReport.get('priority')?.touched
+        "
+      >
+        You need to select Priority.
+      </div>
+
+      <div>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+</div>

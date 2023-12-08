@@ -1,13 +1,6 @@
 {
   "Logs": [
     {
-      "id": 1,
-      "reportId": 2,
-      "status": "New",
-      "price": 200.5,
-      "logDate": "2023-12-15"
-    },
-    {
       "id": 2,
       "reportId": 3,
       "status": "New",
