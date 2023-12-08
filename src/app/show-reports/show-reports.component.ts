@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-show-reports',
-  templateUrl: './show-reports.component.html',
+  templateUrl:'./show-reports.component.html',
   styleUrls: ['./show-reports.component.css'],
 })
 export class ShowReportsComponent implements OnInit {
@@ -16,6 +16,8 @@ export class ShowReportsComponent implements OnInit {
   public loggedUserId: number = -1;
   public dateOrder: 'asc' | 'desc' = 'asc';
   public priorityOrder: 'asc' | 'desc' = 'asc';
+  public startDateFilter: Date = this.reportsService.getStartDate();
+  public endDateFilter: Date = this.reportsService.getEndDate();;
 
   statusOptions: Status[] = [
     Status.new,
@@ -28,7 +30,8 @@ export class ShowReportsComponent implements OnInit {
     private reportsService: ReportsService,
     private userService: UserService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadReports();
@@ -40,6 +43,14 @@ export class ShowReportsComponent implements OnInit {
 
   changePriorityOrder(sortOrder: 'asc' | 'desc') {
     this.priorityOrder = sortOrder;
+  }
+
+  changestartDateFilter(startDateFilter: Date){
+    this.startDateFilter = startDateFilter;
+  }
+
+  changeendDateFilter(endDateFilter: Date){
+    this.endDateFilter = endDateFilter;
   }
 
   loadReports() {

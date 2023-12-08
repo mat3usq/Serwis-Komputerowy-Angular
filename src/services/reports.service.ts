@@ -62,7 +62,31 @@ export class ReportsService {
     return reports.find((report) => report['reportId'] === reportId);
   }
 
+  getStartDate(): Date {
+    const initialReports: Report[] = this.getReports();
 
+    if (initialReports.length === 0) {
+      return new Date(); // Możesz zdecydować, co zwrócić, gdy brak raportów.
+    }
+
+    return initialReports.reduce((minDate, report) => {
+      const reportDate = new Date(report['startDate']);
+      return reportDate < minDate ? reportDate : minDate;
+    }, new Date());
+  }
+
+  getEndDate(): Date {
+    const initialReports: Report[] = this.getReports();
+
+    if (initialReports.length === 0) {
+      return new Date(); // Możesz zdecydować, co zwrócić, gdy brak raportów.
+    }
+
+    return initialReports.reduce((maxDate, report) => {
+      const reportDate = new Date(report['startDate']);
+      return reportDate > maxDate ? reportDate : maxDate;
+    }, new Date());
+  }
   
 
   private getReportsFromLocalStorage(): Report[] {

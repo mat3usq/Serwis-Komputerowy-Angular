@@ -24,12 +24,24 @@
   </select>
 </div>
 
+<div>
+  <label for="startDate">Data początkowa:</label>
+  <input type="date" id="startDate" [(ngModel)]="startDateFilter" (change)="changestartDateFilter(startDateFilter)" />
+</div>
+
+<div>
+  <label for="endDate">Data końcowa:</label>
+  <input type="date" id="endDate" [(ngModel)]="endDateFilter" (change)="changeendDateFilter(endDateFilter)" />
+</div>
+
 <ul *ngIf="reports.length > 0; else noReports">
   <li
     *ngFor="
       let report of reports
         | combinedSort : dateOrder : 'date'
-        | combinedSort : priorityOrder : 'priority';
+        | combinedSort : priorityOrder : 'priority'
+        | combinedSort : startDateFilter : 'startDate'
+        | combinedSort : endDateFilter : 'endDate'
       let i = index
     "
   >
@@ -38,9 +50,9 @@
     {{ report["priority"] }}, <strong>Cena:</strong> {{ report["price"] }},
     <strong>Status:</strong> {{ report["status"] }},
     <strong>Data rozpoczęcia:</strong>
-    {{ report["startDate"] | date : "dd.MM.yyyy HH:mm" }},
+    {{ report["startDate"] | date : "dd.MM.yyyy" }},
     <strong>Data zakończenia:</strong>
-    {{ report["endDate"] | date : "dd.MM.yyyy HH:mm" }}
+    {{ report["endDate"] | date : "dd.MM.yyyy" }},
     <span *ngIf="isServiceman && report['servicemanid'] == undefined">
       <button (click)="TakeTask(report)">Take this report</button>
     </span>
