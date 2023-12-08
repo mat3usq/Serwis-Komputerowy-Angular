@@ -18,7 +18,6 @@ export class ShowLogsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLogData();
-    console.log(this.logs);
   }
 
   async getLogData() {

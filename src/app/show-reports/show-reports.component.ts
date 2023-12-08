@@ -7,17 +7,18 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-show-reports',
-  templateUrl:'./show-reports.component.html',
+  templateUrl: './show-reports.component.html',
   styleUrls: ['./show-reports.component.css'],
 })
 export class ShowReportsComponent implements OnInit {
   public reports: Report[] = [];
   public isServiceman: boolean = false;
   public loggedUserId: number = -1;
-  public dateOrder: 'asc' | 'desc' = 'asc';
-  public priorityOrder: 'asc' | 'desc' = 'asc';
-  public startDateFilter: Date = this.reportsService.getStartDate();
-  public endDateFilter: Date = this.reportsService.getEndDate();;
+
+  public datesOrder: 'asc' | 'desc' = 'asc';
+  public priority: 'asc' | 'desc' | 'all' = 'all';
+  public startDate: Date = this.reportsService.getStartDate();
+  public endDate: Date = this.reportsService.getEndDate();
 
   statusOptions: Status[] = [
     Status.new,
@@ -37,20 +38,20 @@ export class ShowReportsComponent implements OnInit {
     this.loadReports();
   }
 
-  changeDateOrder(sortOrder: 'asc' | 'desc') {
-    this.dateOrder = sortOrder;
+  changeDateOrder(datesOrder: 'asc' | 'desc') {
+    this.datesOrder = datesOrder;
   }
 
-  changePriorityOrder(sortOrder: 'asc' | 'desc') {
-    this.priorityOrder = sortOrder;
+  changePriorityOrder(priority: 'asc' | 'desc' | 'all') {
+    this.priority = priority;
   }
 
-  changestartDateFilter(startDateFilter: Date){
-    this.startDateFilter = startDateFilter;
+  changeStartDateFilter(newStartDate: Date) {
+    this.startDate = newStartDate;
   }
 
-  changeendDateFilter(endDateFilter: Date){
-    this.endDateFilter = endDateFilter;
+  changeEndDateFilter(newEndDate: Date) {
+    this.endDate = newEndDate;
   }
 
   loadReports() {

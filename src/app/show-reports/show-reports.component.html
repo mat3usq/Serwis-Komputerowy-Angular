@@ -1,50 +1,39 @@
 <h2>Raporty</h2>
 
 <div>
-  <label for="sortOrder">Data:</label>
-  <select
-    id="sortOrder"
-    [(ngModel)]="dateOrder"
-    (change)="changeDateOrder(dateOrder)"
-  >
-    <option value="asc">Najwczesniejsze</option>
-    <option value="desc">Najpozniejsze</option>
+  <label for="datesOrder">Daty:</label>
+  <select id="datesOrder" [(ngModel)]="datesOrder" (change)="changeDateOrder(datesOrder)">
+    <option value="asc">Rosnąco</option>
+    <option value="desc">Malejąco</option>
   </select>
 </div>
 
 <div>
-  <label for="sortOrder">Priorytet:</label>
-  <select
-    id="sortOrder"
-    [(ngModel)]="priorityOrder"
-    (change)="changePriorityOrder(priorityOrder)"
-  >
-    <option value="asc">Normalny</option>
-    <option value="desc">Wysoki</option>
+  <label for="priority">Priorytet:</label>
+  <select id="priority" [(ngModel)]="priority" (change)="changePriorityOrder(priority)">
+    <option value="all">Wszystkie</option>
+    <option value="normal">Normalny</option>
+    <option value="high">Wysoki</option>
   </select>
 </div>
 
 <div>
   <label for="startDate">Data początkowa:</label>
-  <input type="date" id="startDate" [(ngModel)]="startDateFilter" (change)="changestartDateFilter(startDateFilter)" />
+  <input type="date" id="startDate" [(ngModel)]="startDate" (change)="changeStartDateFilter(startDate)" />
 </div>
 
 <div>
   <label for="endDate">Data końcowa:</label>
-  <input type="date" id="endDate" [(ngModel)]="endDateFilter" (change)="changeendDateFilter(endDateFilter)" />
+  <input type="date" id="endDate" [(ngModel)]="endDate" (change)="changeEndDateFilter(endDate)" />
 </div>
 
+
 <ul *ngIf="reports.length > 0; else noReports">
-  <li
-    *ngFor="
+  <li *ngFor="
       let report of reports
-        | combinedSort : dateOrder : 'date'
-        | combinedSort : priorityOrder : 'priority'
-        | combinedSort : startDateFilter : 'startDate'
-        | combinedSort : endDateFilter : 'endDate'
+        | combinedSort : {dateOrder : datesOrder, priority : priority, startDate : startDate, endDate : endDate}
       let i = index
-    "
-  >
+    ">
     <strong>ID:</strong> {{ report["reportId"] }}, <strong>Opis:</strong>
     {{ report["description"] }}, <strong>Priorytet:</strong>
     {{ report["priority"] }}, <strong>Cena:</strong> {{ report["price"] }},
