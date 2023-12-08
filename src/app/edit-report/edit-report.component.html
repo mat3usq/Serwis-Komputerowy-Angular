@@ -1,29 +1,91 @@
 <div>
-    <h2>Edycja Raportu</h2>
-    <div>
-        <strong>ID:</strong> {{ report ? report['reportId'] : 'N/A' }},
-        <strong>Opis:</strong> {{ report ? report['description'] : 'N/A' }},
-        <strong>Priorytet:</strong> {{ report ? report['priority'] : 'N/A' }},
-        <strong>Cena:</strong> {{ report ? report['price'] : 'N/A' }},
-        <strong>Status:</strong> {{ report ? report['status'] : 'N/A' }},
-        <strong>UserId:</strong> {{ report ? report['userId'] : 'N/A' }},
-        <strong>Data rozpoczęcia:</strong> {{ report ? report['startDate'] : 'N/A' }},
-        <strong>Data zakończenia:</strong> {{ report ? report['endDate'] : 'N/A' }}
+  <h2>Edycja Raportu</h2>
+  <form [formGroup]="editReport" (ngSubmit)="submitForm()">
+    <div *ngIf="report">
+      <div>
+        <strong>ID:</strong> {{ report['reportId'] }}
       </div>
-    
+      <div>
+        <strong>Opis:</strong> {{ report['description'] }}
+      </div>
+      <div>
+        <strong>Priorytet:</strong> {{ report['priority'] }}
+      </div>
+      <div>
+        <strong>Cena:</strong> {{ report['price'] }}
+      </div>
+      
+      <div>
+        <strong>Status:</strong> {{ report['status'] }}
+      </div>
+      <div>
+        <strong>UserId:</strong> {{ report['userId'] }}
+      </div>
+      <div>
+        <strong>Data rozpoczęcia:</strong> {{ report["startDate"] | date : "dd.MM.yyyy" }}
+      </div>
+      <div>
+        <strong>Data zakończenia:</strong> {{ report['endDate'] | date : "dd.MM.yyyy" }}
+      </div>
+    </div>
+
     <h3>Edit:</h3>
     <div>
       <label for="editedStatus">Status:</label>
-      <select id="editedStatus" name="editedStatus" [(ngModel)]="editedStatus" required>
-        <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+      <select
+        id="editedStatus"
+        name="editedStatus"
+        formControlName="editedStatus"
+        required
+      >
+        <option *ngFor="let status of statusOptions" [value]="status">
+          {{ status }}
+        </option>
       </select>
+      <div
+        *ngIf="
+          editReport.get('editedStatus')?.hasError('required') &&
+          editReport.get('editedStatus')?.touched
+        "
+      >
+        You need to select Status.
+      </div>
     </div>
-  
+
     <div>
       <label for="editedPrice">Cena:</label>
-      <input type="text" id="editedPrice" name="editedPrice" [(ngModel)]="editedPrice" />
+      <input
+        type="number"
+        id="editedPrice"
+        name="editedPrice"
+        formControlName="editedPrice"
+      />
+      <div
+        *ngIf="
+          editReport.get('editedPrice')?.hasError('min') &&
+          editReport.get('editedPrice')?.touched
+        "
+      >
+        Price needs to be in between 0 and 10000$.
+      </div>
+      <div
+        *ngIf="
+          editReport.get('editedPrice')?.hasError('max') &&
+          editReport.get('editedPrice')?.touched
+        "
+      >
+        Price needs to be in between 0 and 10000$.
+      </div>
+      <div
+        *ngIf="
+          editReport.get('editedPrice')?.hasError('required') &&
+          editReport.get('editedPrice')?.touched
+        "
+      >
+        Price is required.
+      </div>
     </div>
-  
-    <button (click)="saveChanges(editedStatus,editedPrice)">Zapisz zmiany</button>
-  </div>
-  
+
+    <button type="submit">Zapisz zmiany</button>
+  </form>
+</div>

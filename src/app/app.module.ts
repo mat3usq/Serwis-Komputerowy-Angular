@@ -17,6 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReportsService } from 'src/services/reports.service';
 import { UserService } from 'src/services/user.service';
 import { combinedSort } from 'src/services/datePriorityPipe';
+import { EditReportComponent } from './edit-report/edit-report.component';
+import { LogoDirectiveDirective } from './logo-directive.directive';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { combinedSort } from 'src/services/datePriorityPipe';
     TestComponent,
     ShowReportsComponent,
     ShowReportFormComponent,
-    combinedSort
+    combinedSort,
+    EditReportComponent,
+    LogoDirectiveDirective,
   ],
   imports: [
     BrowserModule,
@@ -39,3 +43,4 @@ import { combinedSort } from 'src/services/datePriorityPipe';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

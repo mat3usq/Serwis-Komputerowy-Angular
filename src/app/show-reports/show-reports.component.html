@@ -38,9 +38,9 @@
     {{ report["priority"] }}, <strong>Cena:</strong> {{ report["price"] }},
     <strong>Status:</strong> {{ report["status"] }},
     <strong>Data rozpoczęcia:</strong>
-    {{ report["startDate"] | date : "dd.MM.yyyy HH:mm" }},
+    {{ report["startDate"] | date : "dd.MM.yyyy" }},
     <strong>Data zakończenia:</strong>
-    {{ report["endDate"] | date : "dd.MM.yyyy HH:mm" }}
+    {{ report["endDate"] | date : "dd.MM.yyyy" }}
     <span *ngIf="isServiceman && report['servicemanid'] == undefined">
       <button (click)="TakeTask(report)">Take this report</button>
     </span>
