@@ -42,19 +42,23 @@ export class ShowReportFormComponent {
   }
 
   onSubmit() {
-    console.log('Opis problemu:', this.problemDescription);
-    console.log('Priorytet:', this.selectedPriority);
-    const newReport = new Report(
-      this.problemDescription,
-      this.selectedPriority,
-      Status.new,
-      new Date(),
-      this.userService.getLoggedUserId()
-    );
-    console.log(newReport);
-    this.reportsService.addReport(newReport);
-    this.router.navigate(['/reports']);
-    console.log(this.userService.getLoggedUserId());
+    if (this.newReport.valid) {
+      const newReport = new Report(
+        this.problemDescription,
+        this.selectedPriority,
+        Status.new,
+        new Date(),
+        this.userService.getLoggedUserId()
+      );
+      console.log(newReport);
+      this.reportsService.addReport(newReport);
+      this.router.navigate(['/reports']);
+      console.log(this.userService.getLoggedUserId());
+    }else {
+      console.log("Form is not valid!!!");
+      this.getFormValidationErrors();
+    }
+    
   }
 
   getFormValidationErrors() {
