@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Log } from 'src/models/Log';
-import { map } from 'rxjs/operators';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -11,41 +11,22 @@ import { map } from 'rxjs/operators';
 export class LogService {
   private apiUrl = 'http://localhost:3000/Logs';
 
-  constructor(private http: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
-  async getLogs(): Promise<Observable<Log[]>> {
-    const response = await fetch(this.apiUrl, {
-      method: 'GET',
-    });
-
-    if (!response.ok) {
-      throw new Error('Nie udało się pobrać danych');
-    }
-
-    const logs: Log[] = await response.json();
-    const observableLogs: Observable<Log[]> = new Observable((observer) => {
-      observer.next(logs);
-      observer.complete();
-    });
-
-    return observableLogs;
+  getLogs(): Observable<Log[]> {
+    return this.httpClient.get<Log[]>(this.apiUrl);
   }
 
-  async addLog(log: Log) {
-    console.log(log);
-    const response = await fetch(this.apiUrl, {
-      method: 'POST',
-      headers: {
+  addLog(log: Log): void {
+    const httpOptions = {
+      headers: new HttpHeaders({
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(log),
-    });
+      }),
+    };
+    this.httpClient.post(`${this.apiUrl}`, log, httpOptions).subscribe();
   }
 
   deleteLog(logId: number): void {
-    console.log(logId);
-    fetch(this.apiUrl + `/${logId}`, {
-      method: 'DELETE',
-    });
+    this.httpClient.delete(`${this.apiUrl}/${logId}`).subscribe();
   }
 }

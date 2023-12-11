@@ -7,7 +7,7 @@ export class User {
     protected phoneNumber: string = "";
 
 
-    public get UserId(): number {
+    public get Id(): number {
         return this.id;
     }
     public get Email(): string {
@@ -24,10 +24,6 @@ export class User {
     }
     public get PhoneNumber(): string {
         return this.phoneNumber;
-    }
-
-    public get Id(): number {
-        return this.id;
     }
 
 

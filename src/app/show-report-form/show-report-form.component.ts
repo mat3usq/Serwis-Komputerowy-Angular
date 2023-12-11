@@ -15,7 +15,7 @@ export class ShowReportFormComponent {
   problemDescription: string = '';
   selectedPriority: Priority = Priority.normal;
 
-  constructor(private reportsService: ReportsService,private userService: UserService, private router: Router) { }
+  constructor(private reportsService: ReportsService, private userService: UserService, private router: Router) { }
 
   priorityOptions: Priority[] = [
     Priority.high,
@@ -24,11 +24,11 @@ export class ShowReportFormComponent {
   onSubmit() {
     console.log('Opis problemu:', this.problemDescription);
     console.log('Priorytet:', this.selectedPriority);
-    const newReport = new Report(this.problemDescription, this.selectedPriority, Status.new, new Date(), this.userService.getLoggedClient());
+    const newReport = new Report(this.problemDescription, this.selectedPriority, Status.new, new Date(), this.userService.getLoggedUserId());
     console.log(newReport);
     this.reportsService.addReport(newReport);
     this.router.navigate(['/reports']);
-    console.log(this.userService.getLoggedClient());
+    console.log(this.userService.getLoggedUserId());
 
   }
 }

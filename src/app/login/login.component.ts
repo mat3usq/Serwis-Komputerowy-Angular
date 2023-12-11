@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Serviceman } from 'src/models/Serviceman';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -29,12 +30,16 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const formData = this.loginForm.value;
 
-      this.userService.getClient(formData.email, formData.password)
+      this.userService.getUser(formData.email, formData.password)
         .subscribe({
           next: (result) => {
-            const loggedClient = result;
-            if (loggedClient) {
-              this.userService.addLoggedClient(result['id']);
+            const loggedUser = result;
+            let isServiceman = false;
+            if (loggedUser) {
+              if (loggedUser['userType'] === 'serviceman') {
+                isServiceman = true;
+              }
+              this.userService.addLoggedUser(result['id'], isServiceman);
               this.router.navigate(['reports']);
             } else {
             }

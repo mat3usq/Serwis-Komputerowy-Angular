@@ -1,97 +1,83 @@
 import { Injectable } from '@angular/core';
 import { Report } from 'src/models/Report';
-import { Status } from 'src/models/Status';
-import { Priority } from 'src/models/Priority';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpHeaders } from '@angular/common/http';
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root',
+})
 export class ReportsService {
-  private localStorageKey = 'reports';
+  private apiUrl = 'http://localhost:3000/Reports';
 
-  constructor() {
-    // Inicjalizacja localStorage
-    const initialReports: Report[] = [
-      new Report('Opis raportu 0', Priority.high, Status.solved, new Date('2023-11-26'), 2),
-      new Report('Opis raportu 1', Priority.normal, Status.inRealization, new Date('2023-11-27'), 3),
-      new Report('Opis raportu 2', Priority.normal, Status.inRealization, new Date('2023-11-22'), 2),
-      new Report('Opis raportu 3', Priority.normal, Status.inRealization, new Date('2023-11-21'), 2),
-      new Report('Opis raportu 4', Priority.normal, Status.inRealization, new Date('2023-11-30'), 2),
-    ];
-    if(this.getReportsFromLocalStorage().length == 0 )  localStorage.setItem(this.localStorageKey, JSON.stringify(initialReports));
+  constructor(private httpClient: HttpClient) { }
+
+  getReports(): Observable<Report[]> {
+    return this.httpClient.get<Report[]>(this.apiUrl);
   }
 
-  getReports(): Report[] {
-    return this.getReportsFromLocalStorage();
-  }
-
-  getReportsByUserId(userId: number): Report[] {
-    const allReports = this.getReportsFromLocalStorage();
-    return allReports.filter((report) => report['userId'] === userId);
+  getReportsByUserId(userId: number): Observable<Report[]> {
+    return this.httpClient.get<Report[]>(`${this.apiUrl}?userId=${userId}`);
   }
 
   addReport(report: Report): void {
-    const reports: Report[] = this.getReportsFromLocalStorage();
-    report['reportId'] = reports.length; // Temporary ID assignment
-    reports.push(report);
-    localStorage.setItem(this.localStorageKey, JSON.stringify(reports));
+    this.httpClient.post(`${this.apiUrl}`, report).subscribe();
   }
 
-  editReport(reportId: number, status: Status, price: number): void {
-    const reports: Report[] = this.getReportsFromLocalStorage();
-    const report = reports.find((r) => r['reportId'] === reportId);
-    if (report) {
-      report['status'] = status;
-      report['price'] = price;
-      if(report['status'] == Status.solved) report['endDate'] = new Date();
-      if(report['status'] != Status.solved) report['endDate'] = undefined;
-      localStorage.setItem(this.localStorageKey, JSON.stringify(reports));
-    }
+  updateReport(report: Report): void {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    this.httpClient.put(`${this.apiUrl}/${report['id']}`, report, httpOptions).subscribe({
+      complete: () => { location.reload(); }
+    });
   }
 
-  assignServicemanToReport(reportId: number, servicemanId: number): void {
-    console.log(reportId +" "+servicemanId);
-    const reports: Report[] = this.getReportsFromLocalStorage();
-    const report = reports.find((r) => r['reportId'] === reportId);
-    if (report) {
-      report['servicemanid'] = servicemanId;
-      localStorage.setItem(this.localStorageKey, JSON.stringify(reports));
-    }
+  assignServicemanToReport(id: number, servicemanId: number): void {
+    this.getReportById(id).subscribe({
+      next: (report) => {
+        if (report) {
+          report['servicemanId'] = servicemanId;
+          this.updateReport(report);
+        } else {
+          console.error('Nie znaleziono raportu o podanym ID.');
+        }
+      },
+      error: (err) => { console.log(err); }
+    })
   }
 
-  getReportById(reportId: number): Report | undefined {
-    const reports: Report[] = this.getReportsFromLocalStorage();
-    return reports.find((report) => report['reportId'] === reportId);
+  getReportById(id: number): Observable<Report> {
+    return this.httpClient.get<Report>(`${this.apiUrl}/${id}`);
   }
 
-  getStartDate(): Date {
-    const initialReports: Report[] = this.getReports();
-
-    if (initialReports.length === 0) {
-      return new Date(); // Możesz zdecydować, co zwrócić, gdy brak raportów.
-    }
-
-    return initialReports.reduce((minDate, report) => {
-      const reportDate = new Date(report['startDate']);
-      return reportDate < minDate ? reportDate : minDate;
-    }, new Date());
+  getStartDate(): Observable<Date> {
+    return this.httpClient.get<Report[]>(`${this.apiUrl}?_sort=startDate&_order=ASC`).pipe(
+      map(reports => {
+        if (reports && reports.length > 0) {
+          const firstReportStartDate = reports[0]['startDate'];
+          return new Date(firstReportStartDate);
+        } else {
+          throw new Error('Brak raportów lub błąd podczas pobierania danych.');
+        }
+      })
+    );
   }
 
-  getEndDate(): Date {
-    const initialReports: Report[] = this.getReports();
-
-    if (initialReports.length === 0) {
-      return new Date(); // Możesz zdecydować, co zwrócić, gdy brak raportów.
-    }
-
-    return initialReports.reduce((maxDate, report) => {
-      const reportDate = new Date(report['startDate']);
-      return reportDate > maxDate ? reportDate : maxDate;
-    }, new Date());
+  getEndDate(): Observable<Date> {
+    return this.httpClient.get<Report[]>(`${this.apiUrl}?_sort=startDate&_order=DESC`).pipe(
+      map(reports => {
+        if (reports && reports.length > 0) {
+          const firstReportStartDate = reports[0]['startDate'];
+          return new Date(firstReportStartDate);
+        } else {
+          throw new Error('Brak raportów lub błąd podczas pobierania danych.');
+        }
+      })
+    );
   }
-  
-
-  private getReportsFromLocalStorage(): Report[] {
-    const reportsJSON = localStorage.getItem(this.localStorageKey);
-    return reportsJSON ? JSON.parse(reportsJSON) : [];
-  }
-
 }

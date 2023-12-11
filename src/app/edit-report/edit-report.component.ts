@@ -19,7 +19,7 @@ import { Log } from 'src/models/Log';
 })
 export class EditReportComponent implements OnInit {
   public report?: Report;
-  public editedStatus: Status = Status.new; 
+  public editedStatus: Status = Status.new;
   public editedPrice?: number;
   public statusOptions: Status[] = [
     Status.new,
@@ -27,44 +27,48 @@ export class EditReportComponent implements OnInit {
     Status.inRealization,
     Status.solved,
   ];
+  public passedid!: number;
   constructor(
     private reportService: ReportsService,
     private actRoute: ActivatedRoute,
     private router: Router,
     private logService: LogService
-  ) {}
+  ) { }
+
   ngOnInit() {
-    const id = this.actRoute.snapshot.paramMap.get('reportId');
-    if (id != undefined) {
-      this.report = this.reportService.getReportById(parseInt(id));
+    const id = this.actRoute.snapshot.paramMap.get('id');
+
+    if (id !== null) {
+      this.reportService.getReportById(parseInt(id)).subscribe({
+        next: (r) => {
+          this.report = r;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    } else {
+      console.error('There is no report id.');
     }
   }
 
-  async saveChanges(editedStatus: Status, editedPrice?: number) {
-    let generatedId: number = 0;
 
-    if (this.report != undefined && editedPrice != undefined)
-      this.reportService.editReport(
-        this.report['reportId'],
-        editedStatus,
-        editedPrice
-      );
+  saveChanges(editedStatus: Status, editedPrice?: number) {
+    debugger;
+    if (this.report != undefined && editedPrice != undefined) {
+      this.report['status'] = editedStatus;
+      this.report['price'] = editedPrice;
+      this.reportService.updateReport(this.report);
+    }
+
     this.router.navigate(['/reports']);
 
-    const logsObservable = await this.logService.getLogs();
-    logsObservable.subscribe((logs) => {
-      logs.forEach((log) => {
-        if (log['id'] > generatedId) generatedId = log['id'];
-      });
-    });
-
     if (this.report != undefined) {
-      const price = this.report['price'];
       if (editedPrice)
         this.logService.addLog(
           new Log(
-            generatedId + 1,
-            this.report['reportId'],
+            0,
+            this.report['id'],
             editedStatus,
             editedPrice,
             new Date()

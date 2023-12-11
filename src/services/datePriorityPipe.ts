@@ -40,7 +40,9 @@ export class combinedSort implements PipeTransform {
     if (priority === "all") {
       return reports;
     }
+    const lowercasePriority = priority.toLowerCase();
+    const formattedPriority = lowercasePriority.charAt(0).toUpperCase() + lowercasePriority.slice(1);
 
-    return reports.filter((report) => report['priority'] === priority);
+    return reports.filter((report) => report['priority'] === formattedPriority);
   }
 }

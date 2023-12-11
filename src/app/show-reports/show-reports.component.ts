@@ -16,9 +16,9 @@ export class ShowReportsComponent implements OnInit {
   public loggedUserId: number = -1;
 
   public datesOrder: 'asc' | 'desc' = 'asc';
-  public priority: 'asc' | 'desc' | 'all' = 'all';
-  public startDate: Date = this.reportsService.getStartDate();
-  public endDate: Date = this.reportsService.getEndDate();
+  public priority: 'normal' | 'high' | 'all' = 'all';
+  public startDate!: Date;
+  public endDate!: Date;
 
   statusOptions: Status[] = [
     Status.new,
@@ -27,11 +27,15 @@ export class ShowReportsComponent implements OnInit {
     Status.solved,
   ];
 
-  constructor(
-    private reportsService: ReportsService,
-    private userService: UserService,
-    private router: Router
-  ) {
+  constructor(private reportsService: ReportsService, private userService: UserService, private router: Router) {
+    this.reportsService.getStartDate().subscribe({
+      next: (r) => { this.startDate = r },
+      error: (err) => { console.log(err) }
+    });
+    this.reportsService.getEndDate().subscribe({
+      next: (r) => { this.endDate = r },
+      error: (err) => { console.log(err) }
+    });
   }
 
   ngOnInit(): void {
@@ -42,7 +46,7 @@ export class ShowReportsComponent implements OnInit {
     this.datesOrder = datesOrder;
   }
 
-  changePriorityOrder(priority: 'asc' | 'desc' | 'all') {
+  changePriorityOrder(priority: 'normal' | 'high' | 'all') {
     this.priority = priority;
   }
 
@@ -56,30 +60,25 @@ export class ShowReportsComponent implements OnInit {
 
   loadReports() {
     this.isServiceman = this.userService.isServiceman();
-    this.loggedUserId = this.userService.getLoggedClient();
-    if (this.isServiceman) this.reports = this.reportsService.getReports();
+    this.loggedUserId = this.userService.getLoggedUserId();
+    if (this.isServiceman) {
+      this.reportsService.getReports().subscribe({
+        next: (reports) => { this.reports = reports },
+        error: (err) => { console.log(err) }
+      });
+    }
     else
-      this.reports = this.reportsService.getReportsByUserId(
-        this.userService.getLoggedClient()
-      );
-    console.log(this.reports);
+      this.reportsService.getReportsByUserId(this.userService.getLoggedUserId()).subscribe({
+        next: (reports) => { this.reports = reports },
+        error: (err) => { console.log(err) }
+      });
   }
 
-  NavigateToEditReport(reportId: number) {
-    const navigationExtras = {
-      state: {
-        ReportId: reportId,
-      },
-    };
-    this.router.navigate(['/edit-report', reportId]);
+  NavigateToEditReport(id: number) {
+    this.router.navigate(['/edit-report', id]);
   }
 
   TakeTask(clickedReport: Report) {
-    this.reportsService.assignServicemanToReport(
-      clickedReport['reportId'],
-      this.userService.getLoggedClient()
-    );
-    console.log(this.reportsService.getReports());
-    window.location.reload();
+    this.reportsService.assignServicemanToReport(clickedReport['id'], this.userService.getLoggedUserId());
   }
 }

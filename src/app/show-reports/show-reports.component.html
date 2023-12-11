@@ -34,7 +34,7 @@
         | combinedSort : {dateOrder : datesOrder, priority : priority, startDate : startDate, endDate : endDate}
       let i = index
     ">
-    <strong>ID:</strong> {{ report["reportId"] }}, <strong>Opis:</strong>
+    <strong>ID:</strong> {{ report["id"] }}, <strong>Opis:</strong>
     {{ report["description"] }}, <strong>Priorytet:</strong>
     {{ report["priority"] }}, <strong>Cena:</strong> {{ report["price"] }},
     <strong>Status:</strong> {{ report["status"] }},
@@ -42,11 +42,11 @@
     {{ report["startDate"] | date : "dd.MM.yyyy" }},
     <strong>Data zakończenia:</strong>
     {{ report["endDate"] | date : "dd.MM.yyyy" }},
-    <span *ngIf="isServiceman && report['servicemanid'] == undefined">
+    <span *ngIf="isServiceman && report['servicemanId'] == undefined">
       <button (click)="TakeTask(report)">Take this report</button>
     </span>
-    <span *ngIf="report['servicemanid'] == this.loggedUserId">
-      <button (click)="NavigateToEditReport(report['reportId'])">
+    <span *ngIf="report['servicemanId'] == this.loggedUserId">
+      <button (click)="NavigateToEditReport(report['id'])">
         Edit report
       </button>
     </span>
