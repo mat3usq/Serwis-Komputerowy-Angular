@@ -1,37 +1,27 @@
-<p LogoDirectiveDirective>Serwis Komputerowy</p>
-<div>
-  <h2>Edycja Raportu</h2>
-  <form [formGroup]="editReport" (ngSubmit)="submitForm()">
+<section class="editReport">
+  <p LogoDirectiveDirective>Computer Service</p>
+  <h3>Edit Report</h3>
+  <form [formGroup]="editReport" (ngSubmit)="submitForm()" class="edit-box">
     <div *ngIf="report">
+      <div><strong>ID:</strong> {{ report["id"] }}</div>
+      <div><strong>Description:</strong> {{ report["description"] }}</div>
+      <div><strong>Priority:</strong> {{ report["priority"] }}</div>
+      <div><strong>Prize:</strong> {{ report["price"] }}</div>
+
+      <div><strong>Status:</strong> {{ report["status"] }}</div>
+      <div><strong>UserId:</strong> {{ report["userId"] }}</div>
       <div>
-        <strong>ID:</strong> {{ report['id'] }}
+        <strong>Start Date:</strong>
+        {{ report["startDate"] | date : "dd.MM.yyyy" }}
       </div>
       <div>
-        <strong>Opis:</strong> {{ report['description'] }}
-      </div>
-      <div>
-        <strong>Priorytet:</strong> {{ report['priority'] }}
-      </div>
-      <div>
-        <strong>Cena:</strong> {{ report['price'] }}
-      </div>
-      
-      <div>
-        <strong>Status:</strong> {{ report['status'] }}
-      </div>
-      <div>
-        <strong>UserId:</strong> {{ report['userId'] }}
-      </div>
-      <div>
-        <strong>Data rozpoczęcia:</strong> {{ report["startDate"] | date : "dd.MM.yyyy" }}
-      </div>
-      <div>
-        <strong>Data zakończenia:</strong> {{ report['endDate'] | date : "dd.MM.yyyy" }}
+        <strong>End Date:</strong>
+        {{ report["endDate"] | date : "dd.MM.yyyy" }}
       </div>
     </div>
 
     <h3>Edit:</h3>
-    <div>
+    <div class="sort">
       <label for="editedStatus">Status:</label>
       <select
         id="editedStatus"
@@ -44,6 +34,7 @@
         </option>
       </select>
       <div
+        class="err"
         *ngIf="
           editReport.get('editedStatus')?.hasError('required') &&
           editReport.get('editedStatus')?.touched
@@ -53,7 +44,7 @@
       </div>
     </div>
 
-    <div>
+    <div class="sort">
       <label for="editedPrice">Cena:</label>
       <input
         type="number"
@@ -62,6 +53,7 @@
         formControlName="editedPrice"
       />
       <div
+        class="err"
         *ngIf="
           editReport.get('editedPrice')?.hasError('min') &&
           editReport.get('editedPrice')?.touched
@@ -70,6 +62,7 @@
         Price needs to be in between 0 and 10000$.
       </div>
       <div
+        class="err"
         *ngIf="
           editReport.get('editedPrice')?.hasError('max') &&
           editReport.get('editedPrice')?.touched
@@ -78,6 +71,7 @@
         Price needs to be in between 0 and 10000$.
       </div>
       <div
+        class="err"
         *ngIf="
           editReport.get('editedPrice')?.hasError('required') &&
           editReport.get('editedPrice')?.touched
@@ -87,6 +81,6 @@
       </div>
     </div>
 
-    <button type="submit">Zapisz zmiany</button>
+    <button type="submit">Save Changes</button>
   </form>
-</div>
+</section>

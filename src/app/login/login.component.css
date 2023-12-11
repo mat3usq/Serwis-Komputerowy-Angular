@@ -1,0 +1,54 @@
+.loginForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 330px;
+  height: 320px;
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+input {
+  text-align: center;
+  border: none;
+  border-radius: 20px;
+  width: 200px;
+  height: 30px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-family: "Poppins", sans-serif;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+a {
+  margin-top: 10px;
+  font-size: 14px;
+  color: azure;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  cursor: pointer;
+  color: aquamarine;
+}

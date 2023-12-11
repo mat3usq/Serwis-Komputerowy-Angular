@@ -4,36 +4,15 @@
       "id": 1,
       "reportId": 1,
       "status": "Assigned",
-      "price": 2,
-      "logDate": "2023-12-11T15:59:48.922Z"
+      "price": 123,
+      "logDate": "2023-12-11T21:30:57.384Z"
     },
     {
       "id": 2,
       "reportId": 2,
-      "status": "Assigned",
-      "price": 234,
-      "logDate": "2023-12-11T15:59:52.906Z"
-    },
-    {
-      "id": 3,
-      "reportId": 2,
-      "status": "In Realization",
-      "price": 234,
-      "logDate": "2023-12-11T16:00:37.497Z"
-    },
-    {
-      "id": 4,
-      "reportId": 3,
       "status": "In Realization",
       "price": 123,
-      "logDate": "2023-12-11T16:00:42.449Z"
-    },
-    {
-      "id": 5,
-      "reportId": 4,
-      "status": "Solved",
-      "price": 34,
-      "logDate": "2023-12-11T16:00:47.129Z"
+      "logDate": "2023-12-11T21:31:03.102Z"
     }
   ],
   "Reports": [
@@ -42,7 +21,7 @@
       "description": "Opis raportu 1",
       "priority": "High",
       "status": "Assigned",
-      "price": 2,
+      "price": 123,
       "startDate": "2023-11-26",
       "userId": 1,
       "servicemanId": 1
@@ -52,7 +31,7 @@
       "description": "Opis raportu 2",
       "priority": "Normal",
       "status": "In Realization",
-      "price": 234,
+      "price": 123,
       "startDate": "2023-11-27",
       "userId": 2,
       "servicemanId": 1
@@ -69,14 +48,54 @@
     },
     {
       "id": 4,
+      "description": "ok ok ok ok ok ok ok ok ok ok ok ok ok ok ok ok ok ok ",
+      "priority": "High",
+      "status": "New",
+      "startDate": "2023-12-11T18:36:43.241Z",
+      "userId": 1,
+      "servicemanId": 1
+    },
+    {
+      "id": 5,
+      "description": "no siema co tam u ciebie jak tam??? ",
+      "priority": "Normal",
+      "status": "New",
+      "startDate": "2023-12-11T18:53:44.187Z",
+      "userId": 1,
+      "servicemanId": 1
+    },
+    {
+      "id": 6,
       "description": "",
       "priority": "Normal",
-      "status": "Solved",
-      "startDate": "2023-12-11T15:17:38.370Z",
-      "userId": 3,
-      "servicemanId": 1,
-      "price": 34,
-      "endDate": "2023-12-11T16:00:47.127Z"
+      "status": "New",
+      "startDate": "2023-12-11T21:12:57.581Z",
+      "userId": 1
+    },
+    {
+      "id": 7,
+      "description": "",
+      "priority": "Normal",
+      "status": "New",
+      "startDate": "2023-12-11T21:13:18.933Z",
+      "userId": 1,
+      "servicemanId": 1
+    },
+    {
+      "id": 8,
+      "description": "",
+      "priority": "Normal",
+      "status": "New",
+      "startDate": "2023-12-11T21:15:25.032Z",
+      "userId": 1
+    },
+    {
+      "id": 9,
+      "description": "",
+      "priority": "Normal",
+      "status": "New",
+      "startDate": "2023-12-11T21:16:56.180Z",
+      "userId": 1
     }
   ],
   "Servicemen": [

@@ -1,3 +1,6 @@
-<div>
-  <app-display-logs [logs]='logs' (chosenLogId)="deleteLog($event)"></app-display-logs>
-</div>
+<section class="logs">
+  <app-display-logs
+    [logs]="logs"
+    (chosenLogId)="deleteLog($event)"
+  ></app-display-logs>
+</section>

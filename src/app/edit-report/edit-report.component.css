@@ -1,0 +1,52 @@
+.editReport {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 75vh;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
+}
+
+.sort {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-box {
+  margin: 10px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input,
+select {
+  margin: 10px;
+  text-align: center;
+  border: none;
+  border-radius: 20px;
+  width: 120px;
+  height: 30px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-family: "Poppins", sans-serif;
+}
+
+h3 {
+  letter-spacing: 2px;
+  color: bisque;
+  margin: 10px;
+}
+
+.err {
+  margin-top: 5px;
+  color: rgb(234, 43, 81);
+}

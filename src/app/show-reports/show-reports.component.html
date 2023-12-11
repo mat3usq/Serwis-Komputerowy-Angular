@@ -1,59 +1,108 @@
-<p LogoDirectiveDirective>Serwis Komputerowy</p>
-<h2>Raporty</h2>
+<section class="reports">
+  <p LogoDirectiveDirective>Computer Service</p>
+  <h3>Reports</h3>
 
-<div>
-  <label for="datesOrder">Daty:</label>
-  <select id="datesOrder" [(ngModel)]="datesOrder" (change)="changeDateOrder(datesOrder)">
-    <option value="asc">Rosnąco</option>
-    <option value="desc">Malejąco</option>
-  </select>
-</div>
+  <div class="sorts">
+    <div class="box-sort">
+      <label for="datesOrder">Date</label>
+      <select
+        id="datesOrder"
+        [(ngModel)]="datesOrder"
+        (change)="changeDateOrder(datesOrder)"
+      >
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </div>
 
-<div>
-  <label for="priority">Priorytet:</label>
-  <select id="priority" [(ngModel)]="priority" (change)="changePriorityOrder(priority)">
-    <option value="all">Wszystkie</option>
-    <option value="normal">Normalny</option>
-    <option value="high">Wysoki</option>
-  </select>
-</div>
+    <div class="box-sort">
+      <label for="priority">Priority</label>
+      <select
+        id="priority"
+        [(ngModel)]="priority"
+        (change)="changePriorityOrder(priority)"
+      >
+        <option value="all">All</option>
+        <option value="normal">Normal</option>
+        <option value="high">High</option>
+      </select>
+    </div>
 
-<div>
-  <label for="startDate">Data początkowa:</label>
-  <input type="date" id="startDate" [(ngModel)]="startDate" (change)="changeStartDateFilter(startDate)" />
-</div>
+    <div class="box-sort">
+      <label for="startDate">Start Date</label>
+      <input
+        type="date"
+        id="startDate"
+        [(ngModel)]="startDate"
+        (change)="changeStartDateFilter(startDate)"
+      />
+    </div>
 
-<div>
-  <label for="endDate">Data końcowa:</label>
-  <input type="date" id="endDate" [(ngModel)]="endDate" (change)="changeEndDateFilter(endDate)" />
-</div>
+    <div class="box-sort">
+      <label for="endDate">End Date</label>
+      <input
+        type="date"
+        id="endDate"
+        [(ngModel)]="endDate"
+        (change)="changeEndDateFilter(endDate)"
+      />
+    </div>
+  </div>
 
+  <table *ngIf="reports.length > 0; else noReports">
+    <tr>
+      <th>ID</th>
+      <th>Description</th>
+      <th>Priority</th>
+      <th>Price</th>
+      <th>Status</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th *ngIf="isServiceman">Action</th>
+    </tr>
+    <tr
+      *ngFor="
+        let report of reports
+          | combinedSort
+            : {
+                dateOrder: datesOrder,
+                priority: priority,
+                startDate: startDate,
+                endDate: endDate
+              };
+        let i = index
+      "
+    >
+      <td>{{ report["id"] }}</td>
+      <td class="description">{{ report["description"] }}</td>
+      <td>{{ report["priority"] }}</td>
+      <td>{{ report["price"] }}</td>
+      <td>{{ report["status"] }}</td>
+      <td>
+        {{ report["startDate"] | date : "dd.MM.yyyy" }}
+      </td>
+      <td>
+        {{ report["endDate"] | date : "dd.MM.yyyy" }}
+      </td>
+      <td *ngIf="isServiceman">
+        <span *ngIf="isServiceman && report['servicemanId'] == undefined">
+          <button (click)="TakeTask(report)">Take this report</button>
+        </span>
+        <span
+          *ngIf="report['servicemanId'] == this.loggedUserId && isServiceman"
+        >
+          <button (click)="NavigateToEditReport(report['id'])">
+            Edit report
+          </button>
+        </span>
+      </td>
+    </tr>
+  </table>
 
-<ul *ngIf="reports.length > 0; else noReports">
-  <li *ngFor="
-      let report of reports
-        | combinedSort : {dateOrder : datesOrder, priority : priority, startDate : startDate, endDate : endDate}
-      let i = index
-    ">
-    <strong>ID:</strong> {{ report["id"] }}, <strong>Opis:</strong>
-    {{ report["description"] }}, <strong>Priorytet:</strong>
-    {{ report["priority"] }}, <strong>Cena:</strong> {{ report["price"] }},
-    <strong>Status:</strong> {{ report["status"] }},
-    <strong>Data rozpoczęcia:</strong>
-    {{ report["startDate"] | date : "dd.MM.yyyy" }},
-    <strong>Data zakończenia:</strong>
-    {{ report["endDate"] | date : "dd.MM.yyyy" }},
-    <span *ngIf="isServiceman && report['servicemanId'] == undefined">
-      <button (click)="TakeTask(report)">Take this report</button>
-    </span>
-    <span *ngIf="report['servicemanId'] == this.loggedUserId && isServiceman">
-      <button (click)="NavigateToEditReport(report['id'])">
-        Edit report
-      </button>
-    </span>
-  </li>
-</ul>
+  <a href="/reportform" class="reportform">Add New Report</a>
+  <a href="/showlogs" class="showlogs">Show Logs</a>
 
-<ng-template #noReports>
-  <p>Brak raportów do wyświetlenia.</p>
-</ng-template>
+  <ng-template #noReports>
+    <p>Brak raportów do wyświetlenia.</p>
+  </ng-template>
+</section>

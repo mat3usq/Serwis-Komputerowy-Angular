@@ -1,46 +1,63 @@
-<p LogoDirectiveDirective>Serwis Komputerowy</p>
-<div>
-  <h1>WITAJ PRZYWOŁYWACZU Z CZYM MASZ PROBLEM </h1>
+<section class="addReport">
+  <p LogoDirectiveDirective>Computer Service</p>
+  <h3>Add Report</h3>
 
-  <form [formGroup]="newReport" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="problemDescription">Opis problemu:</label>
-        <textarea id="problemDescription" name="problemDescription" formControlName="problemDescription" required></textarea>
-      </div>
-      <div
+  <form [formGroup]="newReport" (ngSubmit)="onSubmit()" class="sort">
+    <div class="add-box">
+      <label for="problemDescription">Description Of The Problem</label>
+      <textarea
+        id="problemDescription"
+        name="problemDescription"
+        formControlName="problemDescription"
+        required
+        [(ngModel)]="problemDescription"
+      ></textarea>
+    </div>
+    <div
+      class="err"
       *ngIf="
         newReport.get('problemDescription')?.hasError('minlength') &&
         newReport.get('problemDescription')?.touched
-        "
-      >
+      "
+    >
       Problem Description needs to be at least 50 characters
-      </div>
-      <div
+    </div>
+    <div
+      class="err"
       *ngIf="
         newReport.get('problemDescription')?.hasError('required') &&
         newReport.get('problemDescription')?.touched
-        "
+      "
+    >
+      Problem Description is required.
+    </div>
+
+    <div class="add-box">
+      <label for="priority">Priority:</label>
+      <select
+        id="priority"
+        name="priority"
+        formControlName="priority"
+        required
+        [(ngModel)]="selectedPriority"
       >
-      Problem Description needs to be at least 50 characters
-      </div>
-  
-      <div>
-        <label for="priority">Priorytet:</label>
-        <select id="priority" name="priority" formControlName="priority" required>
-          <option *ngFor="let priority of priorityOptions" [value]="priority">{{ priority }}</option>
-        </select>
-      </div>
-      <div
+        <option *ngFor="let priority of priorityOptions" [value]="priority">
+          {{ priority }}
+        </option>
+      </select>
+    </div>
+    <div
+      class="err"
       *ngIf="
         newReport.get('priority')?.hasError('required') &&
         newReport.get('priority')?.touched
-        "
-      >
-        You need to select Priority.
-      </div>
+      "
+    >
+      You need to select Priority.
+    </div>
 
-      <div>
-        <button type="submit">Submit</button>
-      </div>
-    </form>
-</div>
+    <div>
+      <button type="submit">Add Report</button>
+    </div>
+  </form>
+</section>

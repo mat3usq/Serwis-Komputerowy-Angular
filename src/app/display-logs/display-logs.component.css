@@ -1,0 +1,49 @@
+h2 {
+  text-align: center;
+  letter-spacing: 2px;
+  color: greenyellow;
+  margin: 20px;
+}
+
+table {
+  margin: 20px;
+}
+
+th {
+  letter-spacing: 2px;
+  color: bisque;
+  padding: 10px;
+  text-align: center;
+}
+
+tr,
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+.reportform {
+  color: rgb(211, 168, 252);
+  position: absolute;
+  left: 60px;
+  top: 40px;
+}
+
+.showlogs {
+  color: rgb(50, 202, 114);
+  position: absolute;
+  right: 60px;
+  top: 40px;
+}
+
+a {
+  text-decoration: none;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+a:hover {
+  cursor: pointer;
+  color: bisque;
+  font-weight: bold;
+}

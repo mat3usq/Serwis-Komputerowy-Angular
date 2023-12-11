@@ -1,18 +1,16 @@
-<p LogoDirectiveDirective>Serwis Komputerowy</p>
+<section class="loginForm">
+  <p LogoDirectiveDirective>Computer Service</p>
+  <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+    <div class="input-group">
+      <label for="email">Email</label>
+      <input formControlName="email" id="email" type="email" />
+    </div>
 
-
-<section>
-    <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
-        <div class="input-group">
-            <label for="email">Email: </label>
-            <input formControlName="email" id="email" type="email">
-        </div>
-        <div class="input-group">
-            <label for="password">Password: </label>
-            <input formControlName="password" id="password" type="password">
-        </div>
-        <div>
-            <button type="submit">Login</button>
-        </div>
-    </form>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input formControlName="password" id="password" type="password" />
+    </div>
+    <a href="/registration">Don't have account? Register me.</a>
+    <button type="submit">Login</button>
+  </form>
 </section>

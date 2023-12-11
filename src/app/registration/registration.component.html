@@ -1,10 +1,11 @@
-<p LogoDirectiveDirective>Serwis Komputerowy</p>
-<section>
+<section class="loginForm">
+  <p LogoDirectiveDirective>Computer Service</p>
   <form [formGroup]="registrationForm" (ngSubmit)="submitForm()">
     <div class="input-group">
       <label for="email">Email: </label>
       <input formControlName="email" id="email" type="email" />
       <div
+        class="err"
         *ngIf="
           registrationForm.get('email')?.hasError('required') &&
           registrationForm.get('email')?.touched
@@ -13,6 +14,7 @@
         Email is required.
       </div>
       <div
+        class="err"
         *ngIf="
           registrationForm.get('email')?.hasError('pattern') &&
           registrationForm.get('email')?.touched
@@ -26,6 +28,7 @@
       <label for="firstName">First Name: </label>
       <input formControlName="firstName" id="firstName" type="text" />
       <div
+        class="err"
         *ngIf="
           registrationForm.get('firstName')?.hasError('required') &&
           registrationForm.get('firstName')?.touched
@@ -34,6 +37,7 @@
         First name is required.
       </div>
       <div
+        class="err"
         *ngIf="
           registrationForm.get('firstName')?.hasError('minlength') &&
           registrationForm.get('firstName')?.touched
@@ -42,6 +46,7 @@
         First name should be at least 2 characters long.
       </div>
       <div
+        class="err"
         *ngIf="
           registrationForm.get('firstName')?.hasError('pattern') &&
           registrationForm.get('firstName')?.touched
@@ -55,6 +60,7 @@
       <label for="lastName">Last Name: </label>
       <input formControlName="lastName" id="lastName" type="text" />
       <div
+        class="err"
         *ngIf="
           registrationForm.get('lastName')?.hasError('required') &&
           registrationForm.get('lastName')?.touched
@@ -63,6 +69,7 @@
         Last name is required.
       </div>
       <div
+        class="err"
         *ngIf="
           registrationForm.get('lastName')?.hasError('minlength') &&
           registrationForm.get('lastName')?.touched
@@ -71,6 +78,7 @@
         Last name should be at least 3 characters long.
       </div>
       <div
+        class="err"
         *ngIf="
           registrationForm.get('lastName')?.hasError('pattern') &&
           registrationForm.get('lastName')?.touched
@@ -84,6 +92,7 @@
       <label for="password">Password: </label>
       <input formControlName="password" id="password" type="password" />
       <div
+        class="err"
         *ngIf="
           registrationForm.get('password')?.hasError('required') &&
           registrationForm.get('password')?.touched
@@ -92,6 +101,7 @@
         Password is required.
       </div>
       <div
+        class="err"
         *ngIf="
           registrationForm.get('password')?.hasError('minlength') &&
           registrationForm.get('password')?.touched
@@ -105,6 +115,7 @@
       <label for="phoneNumber">Phone Number: </label>
       <input formControlName="phoneNumber" id="phoneNumber" type="text" />
       <div
+        class="err"
         *ngIf="
           registrationForm.get('phoneNumber')?.hasError('required') &&
           registrationForm.get('phoneNumber')?.touched
@@ -113,6 +124,7 @@
         Phone number is required.
       </div>
       <div
+        class="err"
         *ngIf="
           registrationForm.get('phoneNumber')?.hasError('pattern') &&
           registrationForm.get('phoneNumber')?.touched
@@ -122,8 +134,6 @@
       </div>
     </div>
 
-    <div>
-      <button type="submit">Register</button>
-    </div>
+    <button type="submit">Register</button>
   </form>
 </section>
