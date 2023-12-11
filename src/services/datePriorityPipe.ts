@@ -6,32 +6,43 @@ import { Priority } from 'src/models/Priority';
   name: 'combinedSort',
 })
 export class combinedSort implements PipeTransform {
-  transform(reports: Report[], sortOrder: string, sortBy: string): Report[] {
+  transform(reports: Report[], filters: { dateOrder: string, priority: string, startDate: Date, endDate: Date }): Report[] {
     if (!reports || reports.length <= 1) {
       return reports || [];
     }
 
-    return reports.slice().sort((a, b) => {
-      if (sortBy === 'date') {
-        const dateA = new Date(a['startDate']).getTime();
-        const dateB = new Date(b['startDate']).getTime();
-        return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
-      } else if (sortBy === 'priority') {
-        const priorityOrder: { [key in Priority]: number } = {
-          [Priority.normal]: 0,
-          [Priority.high]: 1,
-        };
+    const reportsFilteredByDates = this.getReportsBetweenDates(reports, new Date(filters.startDate), new Date(filters.endDate));
 
-        const priorityA = priorityOrder[a['priority']];
-        const priorityB = priorityOrder[b['priority']];
+    return this.getReportsWithSpecificPriority(reportsFilteredByDates, filters.priority).slice().sort((a, b) => {
+      const dateA = new Date(a["startDate"]);
+      const dateB = new Date(b["startDate"]);
 
-        if (!isNaN(priorityA) && !isNaN(priorityB)) {
-          const comparison = priorityA - priorityB;
-          return sortOrder === 'asc' ? comparison : -comparison;
-        }
-      }
+      const comparison = dateA.getTime() - dateB.getTime();
 
-      return 0;
+      return filters.dateOrder === 'asc' ? comparison : -comparison;
     });
+
+  }
+
+  getReportsBetweenDates(reports: Report[], startDate: Date, endDate: Date): Report[] {
+
+    if (!startDate || !endDate) {
+      return reports;
+    }
+
+    return reports.filter((report) => {
+      const reportDate = new Date(report['startDate'])
+      return reportDate >= startDate && reportDate <= endDate;
+    });
+  }
+
+  getReportsWithSpecificPriority(reports: Report[], priority: string): Report[] {
+    if (priority === "all") {
+      return reports;
+    }
+    const lowercasePriority = priority.toLowerCase();
+    const formattedPriority = lowercasePriority.charAt(0).toUpperCase() + lowercasePriority.slice(1);
+
+    return reports.filter((report) => report['priority'] === formattedPriority);
   }
 }

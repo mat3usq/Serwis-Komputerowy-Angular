@@ -4,7 +4,7 @@ import { Priority } from './Priority';
 export class Report {
     private static idCounter: number = 0;
 
-    private reportId: number;
+    private id: number;
     private description: string;
     private priority: Priority;
     private status: Status;
@@ -12,10 +12,10 @@ export class Report {
     private startDate: Date;
     private endDate?: Date;
     private userId: number;
-    private servicemanid?: number;
+    private servicemanId?: number;
 
     constructor(description: string, priority: Priority, status: Status, startDate: Date, userId: number) {
-        this.reportId = Report.idCounter++;
+        this.id = Report.idCounter++;
         this.description = description;
         this.priority = priority;
         this.status = status;
@@ -24,10 +24,10 @@ export class Report {
     }
 
     get ReportId(): number {
-        return this.reportId;
+        return this.id;
     }
     get UserId(): number {
-        return this.reportId;
+        return this.id;
     }
 
 

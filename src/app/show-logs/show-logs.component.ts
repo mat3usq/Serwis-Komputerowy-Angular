@@ -18,13 +18,12 @@ export class ShowLogsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLogData();
-    console.log(this.logs);
   }
 
-  async getLogData() {
-    const logsObservable = await this.logService.getLogs();
-    logsObservable.subscribe(logs => {
-      this.logs = logs;
+  getLogData() {
+    this.logService.getLogs().subscribe({
+      next: (r) => { this.logs = r },
+      error: (err) => { console.log(err) }
     });
   }
 

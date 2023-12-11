@@ -1,136 +1,88 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../models/Client';
-import { User } from '../models/User';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, forkJoin } from 'rxjs';
 import { catchError, retry, map, filter } from 'rxjs/operators';
-import { tap } from 'rxjs/operators';
 import { Serviceman } from 'src/models/Serviceman';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private clientslocalStorageKey = 'clients';
-  private servicemanlocalStorageKey = 'serviceman';
-  private loggedClientlocalStorageKey = 'logged';
+  private apiUrlClients = 'http://localhost:3000/Clients';
+  private apiUrlServicemen = 'http://localhost:3000/Servicemen';
 
-  constructor() {
-    // const clients: Client[] = [];
-    // const servicemans: Serviceman[] = [];
-    
-    // localStorage.setItem(this.servicemanlocalStorageKey, JSON.stringify(servicemans));    
-     //localStorage.setItem(this.clientslocalStorageKey, JSON.stringify(clients));
-    // console.log(this.getClientsFromLocalStorage());
-    // console.log(this.getServicemanFromLocalStorage());
+  private loggedUserLocalStorageKey = 'logged';
+  private isServicemanLocalStorageKey = 'isServiceman';
 
-    const client1 = new Client(0, 'John', 'Doe', 'a', 'a', '111111111')
-    const client2 = new Client(0, 'John', 'Doe', 'b', 'b', '111111111')
-    const serviceman = new Serviceman(5, 'cos', 'ktos', 'f', 'f', '111111111')
-    const serviceman2 = new Serviceman(45645, 'cos', 'ktos', 'h', 'h', '111111111')
+  constructor(private httpClient: HttpClient) { }
 
-    if(this.getServicemanFromLocalStorage().length == 0){
-      this.addServiceman(serviceman);
-    }
-    if(this.getServicemanFromLocalStorage().length == 1){
-      this.addServiceman(serviceman2);
-    }
-    
-    if(this.getClientsFromLocalStorage().length == 0) {
-      this.addClient(client1);
-    }
-    if(this.getClientsFromLocalStorage().length == 1) {
-      this.addClient(client2);
-    }
-    console.log(this.getClientsFromLocalStorage());
-    console.log(this.getServicemanFromLocalStorage());
-    
-  }
+  doesEmailExist(email: string): Observable<boolean> {
+    const clientsEmails = this.httpClient.get<Client[]>(`${this.apiUrlClients}`).pipe(
+      map(clients => clients.map(client => client['email']))
+    );
 
-  isEmailExists(email: string): Observable<boolean> {
-    const clients: Client[] = this.getClientsFromLocalStorage();
-    const servicemans: Serviceman[] = this.getServicemanFromLocalStorage();
-    const emails: string[] = clients.map((client) => client['email']);
-    const servicemanemails: string[] = servicemans.map((serviceman) => serviceman['email']);
-    const table: string[] = [...emails,...servicemanemails];
-    return new Observable<boolean>((observer) => {
-      observer.next(table.includes(email));
-      observer.complete();
-    });
+    const servicemenEmails = this.httpClient.get<Serviceman[]>(`${this.apiUrlServicemen}`).pipe(
+      map(servicemen => servicemen.map(serviceman => serviceman['email']))
+    );
+
+    return forkJoin([clientsEmails, servicemenEmails]).pipe(
+      map(([clientsEmails, servicemenEmails]) => {
+        const allEmails = [...clientsEmails, ...servicemenEmails];
+        return allEmails.includes(email);
+      })
+    );
   }
 
   isServiceman(): boolean {
-    const userId = this.getLoggedClient();
-    const servicemans: Serviceman[] = this.getServicemanFromLocalStorage();
-  
-    return servicemans.some(serviceman => serviceman['id'] === userId);
-  }
-  
-
-  addLoggedClient (userId: number){
-    localStorage.setItem(this.loggedClientlocalStorageKey, JSON.stringify(userId));
-  }
-  getLoggedClient(): number{
-    const clientsJSON = localStorage.getItem(this.loggedClientlocalStorageKey);
-    return clientsJSON ? JSON.parse(clientsJSON) : [];
+    const isClientJSON = localStorage.getItem(this.isServicemanLocalStorageKey);
+    return isClientJSON ? JSON.parse(isClientJSON) === true : false;
   }
 
-  getClient(email: string, password: string): Observable<Client | undefined> {
-    const clients: Client[] = this.getClientsFromLocalStorage();
-    const serviceman: Serviceman[] = this.getServicemanFromLocalStorage();
-    const foundClient = clients.find(
-      (client) => client['email'] === email && client['password'] === password
+  addLoggedUser(userId: number, isServiceman: boolean) {
+    localStorage.setItem(this.isServicemanLocalStorageKey, JSON.stringify(isServiceman));
+    localStorage.setItem(this.loggedUserLocalStorageKey, JSON.stringify(userId));
+  }
+
+  getLoggedUserId(): number {
+    const userIdJSON = localStorage.getItem(this.loggedUserLocalStorageKey);
+    return userIdJSON ? parseInt(userIdJSON) : -1;
+  }
+
+  getUser(email: string, password: string): Observable<any> {
+    localStorage.clear();
+
+    const client$ = this.httpClient.get<any[]>(`${this.apiUrlClients}`).pipe(
+      map(clients => clients.find(client => client['email'] === email && client['password'] === password))
     );
-    const foundServiceman = serviceman.find(
-      (serviceman) => serviceman['email'] === email && serviceman['password'] === password
-    );
-    return new Observable<Client | undefined>((observer) => {
-      observer.next(foundClient);
-      observer.next(foundServiceman);
-      observer.complete();
-    });
-  }
 
-  addClient(client: Client): Observable<Client> {
-    const clients: Client[] = this.getClientsFromLocalStorage();
-    const serviceman: Serviceman[] = this.getServicemanFromLocalStorage();
-    client['id'] = clients.length + serviceman.length; // Temporary ID assignment
-    clients.push(client);
-    localStorage.setItem(this.clientslocalStorageKey, JSON.stringify(clients));
-    return new Observable<Client>((observer) => {
-      observer.next(client);
-      observer.complete();
-    }).pipe(
-      catchError((error) => {
-        return throwError(() => new Error(error.message));
+    const serviceman$ = this.httpClient.get<any[]>(`${this.apiUrlServicemen}`).pipe(
+      map(servicemen => servicemen.find(serviceman => serviceman['email'] === email && serviceman['password'] === password))
+    );
+
+    return forkJoin([client$, serviceman$]).pipe(
+      map(([foundClient, foundServiceman]) => {
+        if (foundClient) {
+          foundClient['userType'] = 'client';
+          return foundClient;
+        } else if (foundServiceman) {
+          foundServiceman['userType'] = 'serviceman';
+          return foundServiceman;
+        } else {
+          return undefined;
+        }
       })
     );
   }
 
-  addServiceman(serviceman: Serviceman): Observable<Client> {
-    const clients: Client[] = this.getClientsFromLocalStorage();
-    const servicemans: Serviceman[] = this.getServicemanFromLocalStorage();
-    serviceman['id'] = clients.length + servicemans.length; // Temporary ID assignment
-    servicemans.push(serviceman);
-    localStorage.setItem(this.servicemanlocalStorageKey, JSON.stringify(servicemans));
-
-    return new Observable<Client>((observer) => {
-      observer.next(serviceman);
-      observer.complete();
-    }).pipe(
-      catchError((error) => {
-        return throwError(() => new Error(error.message));
-      })
-    );
+  addClient(client: Client): void {
+    const body = JSON.stringify(client);
+    this.httpClient.post(`${this.apiUrlClients}`, body).subscribe();
   }
 
-  private getClientsFromLocalStorage(): Client[] {
-    const clientsJSON = localStorage.getItem(this.clientslocalStorageKey);
-    return clientsJSON ? JSON.parse(clientsJSON) : [];
-  }
-  private getServicemanFromLocalStorage(): Client[] {
-    const clientsJSON = localStorage.getItem(this.servicemanlocalStorageKey);
-    return clientsJSON ? JSON.parse(clientsJSON) : [];
+  addServiceman(serviceman: Serviceman): void {
+    const body = JSON.stringify(serviceman);
+    this.httpClient.post(`${this.apiUrlServicemen}`, body).subscribe();
   }
 }
