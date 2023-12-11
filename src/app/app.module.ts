@@ -28,8 +28,8 @@ import { LogoDirectiveDirective } from './logo-directive.directive';
     TestComponent,
     ShowReportsComponent,
     ShowReportFormComponent,
-    combinedSort,
     EditReportComponent,
+    combinedSort,
     LogoDirectiveDirective,
   ],
   imports: [

@@ -1,11 +1,39 @@
 {
   "Logs": [
     {
-      "id": 2,
+      "id": 1,
       "reportId": 1,
+      "status": "Assigned",
+      "price": 2,
+      "logDate": "2023-12-11T15:59:48.922Z"
+    },
+    {
+      "id": 2,
+      "reportId": 2,
+      "status": "Assigned",
+      "price": 234,
+      "logDate": "2023-12-11T15:59:52.906Z"
+    },
+    {
+      "id": 3,
+      "reportId": 2,
+      "status": "In Realization",
+      "price": 234,
+      "logDate": "2023-12-11T16:00:37.497Z"
+    },
+    {
+      "id": 4,
+      "reportId": 3,
+      "status": "In Realization",
+      "price": 123,
+      "logDate": "2023-12-11T16:00:42.449Z"
+    },
+    {
+      "id": 5,
+      "reportId": 4,
       "status": "Solved",
-      "price": "1111",
-      "logDate": "2023-12-11T12:42:59.321Z"
+      "price": 34,
+      "logDate": "2023-12-11T16:00:47.129Z"
     }
   ],
   "Reports": [
@@ -13,10 +41,9 @@
       "id": 1,
       "description": "Opis raportu 1",
       "priority": "High",
-      "status": "Solved",
-      "price": "1111",
+      "status": "Assigned",
+      "price": 2,
       "startDate": "2023-11-26",
-      "endDate": null,
       "userId": 1,
       "servicemanId": 1
     },
@@ -24,10 +51,9 @@
       "id": 2,
       "description": "Opis raportu 2",
       "priority": "Normal",
-      "status": "Assigned",
-      "price": 2,
+      "status": "In Realization",
+      "price": 234,
       "startDate": "2023-11-27",
-      "endDate": null,
       "userId": 2,
       "servicemanId": 1
     },
@@ -36,11 +62,21 @@
       "description": "Opis raportu 3",
       "priority": "Normal",
       "status": "In Realization",
-      "price": 5,
+      "price": 123,
       "startDate": "2023-11-30",
-      "endDate": null,
       "userId": 2,
       "servicemanId": 1
+    },
+    {
+      "id": 4,
+      "description": "",
+      "priority": "Normal",
+      "status": "Solved",
+      "startDate": "2023-12-11T15:17:38.370Z",
+      "userId": 3,
+      "servicemanId": 1,
+      "price": 34,
+      "endDate": "2023-12-11T16:00:47.127Z"
     }
   ],
   "Servicemen": [
@@ -77,6 +113,14 @@
       "email": "b",
       "password": "b",
       "phoneNumber": "112"
+    },
+    {
+      "id": 3,
+      "firstName": "Aaa",
+      "lastName": "Aaa",
+      "email": "kubamatyszek@op.pl",
+      "password": "12345",
+      "phoneNumber": "111111111"
     }
   ]
 }

@@ -39,6 +39,7 @@ export class RegistrationComponent implements OnInit {
             if (!result) {
               const newClient = new Client(0, formData.firstName, formData.lastName, formData.email, formData.password, formData.phoneNumber);
               this.userService.addClient(newClient);
+              this.router.navigate(['']);
             } else {
               console.log("Email already exists!");
             }

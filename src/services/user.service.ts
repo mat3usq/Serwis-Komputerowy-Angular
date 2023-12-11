@@ -4,6 +4,7 @@ import { Observable, of, throwError, forkJoin } from 'rxjs';
 import { catchError, retry, map, filter } from 'rxjs/operators';
 import { Serviceman } from 'src/models/Serviceman';
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 
 @Injectable({
@@ -77,12 +78,20 @@ export class UserService {
   }
 
   addClient(client: Client): void {
-    const body = JSON.stringify(client);
-    this.httpClient.post(`${this.apiUrlClients}`, body).subscribe();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    this.httpClient.post(`${this.apiUrlClients}`, client).subscribe();
   }
 
   addServiceman(serviceman: Serviceman): void {
-    const body = JSON.stringify(serviceman);
-    this.httpClient.post(`${this.apiUrlServicemen}`, body).subscribe();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    this.httpClient.post(`${this.apiUrlServicemen}`, serviceman).subscribe();
   }
 }

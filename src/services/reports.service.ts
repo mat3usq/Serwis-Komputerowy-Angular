@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
-
+import { Status } from 'src/models/Status';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +32,11 @@ export class ReportsService {
         'Content-Type': 'application/json',
       }),
     };
+    
+    if (report) {
+      if(report['status'] == Status.solved) report['endDate'] = new Date();
+      if(report['status'] != Status.solved) report['endDate'] = undefined;
+    }
     this.httpClient.put(`${this.apiUrl}/${report['id']}`, report, httpOptions).subscribe({
       complete: () => { location.reload(); }
     });

@@ -1,3 +1,4 @@
+<p LogoDirectiveDirective>Serwis Komputerowy</p>
 <h2>Raporty</h2>
 
 <div>
@@ -45,7 +46,7 @@
     <span *ngIf="isServiceman && report['servicemanId'] == undefined">
       <button (click)="TakeTask(report)">Take this report</button>
     </span>
-    <span *ngIf="report['servicemanId'] == this.loggedUserId">
+    <span *ngIf="report['servicemanId'] == this.loggedUserId && isServiceman">
       <button (click)="NavigateToEditReport(report['id'])">
         Edit report
       </button>
