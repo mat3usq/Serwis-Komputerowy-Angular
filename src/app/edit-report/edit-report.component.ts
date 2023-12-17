@@ -8,8 +8,9 @@ import { FormGroup, NgModel } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LogService } from 'src/services/logs.service';
+import { DiscountService } from 'src/services/discount.service';
 import { Log } from 'src/models/Log';
-import { NgForm,FormBuilder, Validators, ValidationErrors } from '@angular/forms';
+import { NgForm, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-report',
@@ -33,7 +34,8 @@ export class EditReportComponent implements OnInit {
     private reportService: ReportsService,
     private actRoute: ActivatedRoute,
     private router: Router,
-    private logService: LogService
+    private logService: LogService,
+    private discountService: DiscountService
   ) { }
 
   ngOnInit() {
@@ -56,19 +58,20 @@ export class EditReportComponent implements OnInit {
   initForm() {
     this.editReport = this.formBuilder.group({
       editedStatus: ['', Validators.required],
-      editedPrice: ['', [Validators.min(0),Validators.max(10000), Validators.required]]
+      editedPrice: ['', [Validators.min(0), Validators.max(10000), Validators.required]]
     });
   }
 
-  submitForm(){
+  submitForm() {
     if (this.editReport.valid) {
       const formData = this.editReport.value;
-      this.saveChanges(formData.editedStatus,formData.editedPrice);
+      const newPrice = this.discountService.discountDue(this.report!, formData.editedStatus, formData.editedPrice);
+      this.saveChanges(formData.editedStatus, newPrice);
     } else {
       console.log("Form is not valid!!!");
       this.getFormValidationErrors();
     }
-    }
+  }
 
   getFormValidationErrors() {
     Object.keys(this.editReport.controls).forEach((key) => {
